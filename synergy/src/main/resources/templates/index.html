@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Synergy – Proyectos Ambientales</title>
+  <link rel="stylesheet" th:href="@{/desyng.css}">
+</head>
+<body>
+  <header>
+    <h1>Synergy – Gestión de Proyectos Ambientales</h1>
+    <nav>
+      <a th:href="@{/}">Inicio</a>
+      <a th:href="@{/registrarse}">Registrarse</a>
+      <button onclick="location.href='/registrarse'">Registrarse</button>
+      <a th:href="@{/login}">Login</a>
+      <a th:href="@{/acerca}">Acerca</a>
+      <a th:href="@{/registrarproyecto}">Registrar Proyecto</a>
+       <a th:href="@{/listaproyectos}">lista de proyectos</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Bienvenido a Synergy</h2>
+      <p>
+        Plataforma para registrar y gestionar proyectos ambientales comunitarios.
+      </p>
+      <button>Ver proyectos</button>
+      <button onclick="location.href='/registrarse'">Registrarse</button>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Synergy • Demo educativa
+  </footer>
+</body>
+</html>

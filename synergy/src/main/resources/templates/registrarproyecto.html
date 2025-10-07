@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link rel="stylesheet" href="desyng.css">
+</head>
+<body>
+    <header>
+    <div class="container nav">
+    <div class="brand">Synergy<span class="muted"> • Ambiental</span></div>
+    <div class="spacer"></div>
+    <nav>
+        <button id="navInicio">Inicio</button>
+        <button id="navProyectos">Proyectos</button>
+        <button id="navRegistro">Registrarse</button>
+        <button id="navLogin">Iniciar sesión</button>
+        <button id="navAcerca">Acerca</button>
+    </nav>
+    </div>
+    </header>
+
+      <!-- Formulario de Registro de Proyecto (versión simple, sin modal) -->
+<section id="formRegistro" class="form-container">
+  <h3>Registrar proyecto</h3>
+
+  <form id="formProyecto">
+    <div class="form-grid">
+      <div>
+        <p>ID (automático)</p>
+        <input id="txtId" type="text" readonly />
+
+        <p>Nombre del Proyecto *</p>
+        <input id="txtNombre" type="text" required />
+
+        <p>Responsable *</p>
+        <input id="txtResponsable" type="text" required />
+
+        <p>Categoría *</p>
+        <select id="txtCategoria" required>
+          <option value="REFORESTACION">Reforestación</option>
+          <option value="RECICLAJE">Reciclaje</option>
+          <option value="EDUCACION_AMBIENTAL">Educación ambiental</option>
+          <option value="LIMPIEZA">Limpieza</option>
+        </select>
+      </div>
+
+      <div>
+        <p>Estado</p>
+        <select id="txtEstado">
+          <option value="PROPUESTO">Propuesto</option>
+          <option value="EN_PROGRESO">En ejecución</option>
+          <option value="FINALIZADO">Finalizado</option>
+          <option value="CANCELADO">Cancelado</option>
+        </select>
+
+        <p>Fecha Inicio</p>
+        <input id="txtFechaInicio" type="text" placeholder="dd/mm/yyyy" />
+
+        <p>Fecha Fin</p>
+        <input id="txtFechaFin" type="text" placeholder="dd/mm/yyyy" />
+
+        <p>Adjuntar archivo</p>
+        <input id="txtAdjunto" type="file" accept=".pdf,image/*" />
+      </div>
+    </div>
+
+    <p>Descripción *</p>
+    <textarea id="txtDescripcion" required></textarea>
+
+    <div class="form-actions">
+      <button type="reset" class="btn secondary">Cancelar</button>
+      <button type="submit" class="btn">Guardar</button>
+    </div>
+  </form>
+</section>
+
+
+
+
+</body>
+</html>
