@@ -3,6 +3,9 @@ package com.proaula.spring.synergy.synergy.Controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+    import org.springframework.ui.Model;
+import com.proaula.spring.synergy.synergy.Model.Usuarios.Usuario;
+
 @Controller
 public class ProyectoController {
 
@@ -31,4 +34,6 @@ public class ProyectoController {
     public String listaproyectos() {
         return "listaproyectos"; // sin .html, en minúscula
     }
+
+
 }

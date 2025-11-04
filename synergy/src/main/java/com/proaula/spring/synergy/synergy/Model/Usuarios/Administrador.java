@@ -1,28 +1,36 @@
 package com.proaula.spring.synergy.synergy.Model.Usuarios;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Administrador {
 
-    private int idUsuario;  // referencia al usuario original
-    private String permisos; // opcional, para definir tipo de acceso
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; // identificador principal en la base de datos
 
-    public Administrador(int idUsuario, String permisos) {
+    private int idUsuario;  // referencia al usuario original
+
+    public Administrador() {
+        // Constructor vacío obligatorio para JPA
+    }
+
+    public Administrador(int idUsuario) {
         this.idUsuario = idUsuario;
-        this.permisos = permisos;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public int getIdUsuario() {
         return idUsuario;
     }
 
-    public String getPermisos() {
-        return permisos;
-    }
-
-    public void setPermisos(String permisos) {
-        this.permisos = permisos;
-    }
-
-    public void mostrarDatosAdministrador() {
-        System.out.println("Usuario ID: " + idUsuario + " con permisos: " + permisos);
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 }
