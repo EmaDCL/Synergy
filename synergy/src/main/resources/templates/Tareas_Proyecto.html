@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tareas Asignadas – Synergy</title>
+  <link rel="stylesheet" href="/synergy/src/main/resources/static/Tareas_Proyecto.css">
+</head>
+<body>
+  <section class="hero">
+    <div class="overlay"></div>
+
+    <div class="container">
+      <div class="card">
+        <div class="header">
+          <button class="btn-inicio" onclick="window.location.href='MenuPrincipal.html'">⬅ Volver</button>
+          <h1>Tareas Asignadas</h1>
+          <p class="subtitle">Consulta las tareas en las que estás participando</p>
+        </div>
+
+        <table class="task-table">
+          <thead>
+            <tr>
+              <th>ID Tarea</th>
+              <th>Proyecto</th>
+              <th>Nombre de la Tarea</th>
+              <th>Descripción</th>
+              <th>Estado</th>
+              <th>Fecha Inicio</th>
+              <th>Fecha Fin</th>
+              <th>Participante</th>
+              <th>Enviar Archivo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="tarea : ${tareasUsuario}">
+              <td th:text="${tarea.idTarea}">1</td>
+              <td th:text="${tarea.ID_Proyecto_Tarea}">Proyecto Alpha</td>
+              <td th:text="${tarea.Nombre_Tarea}">Diseñar interfaz</td>
+              <td th:text="${tarea.descripcion}">Crear el diseño de la pantalla principal</td>
+              <td th:text="${tarea.estado}">En progreso</td>
+              <td th:text="${#temporals.format(tarea.fecha_inicio, 'dd/MM/yyyy HH:mm')}">01/11/2025 10:00</td>
+              <td th:text="${#temporals.format(tarea.fecha_Fin, 'dd/MM/yyyy HH:mm')}">15/11/2025 18:00</td>
+              <td th:text="${tarea.ID_Participante}">Usuario 12</td>
+              <td>
+                <div class="file-upload">
+                  <form th:action="@{/tareas/subirArchivo}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" th:name="idTarea" th:value="${tarea.idTarea}" />
+                    <input type="file" name="archivo" id="archivo-${tarea.idTarea}" required />
+                    <label for="archivo-${tarea.idTarea}">Seleccionar</label>
+                    <button type="submit" class="btn-action">Subir</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

@@ -1,0 +1,223 @@
+/* ===== Estilos generales ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", Arial, sans-serif;
+}
+
+/* ===== Fondo principal ===== */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-image: url('/synergy/src/main/resources/static/IMG/Background_Login.jpg'); /* Usa la misma imagen que tu login */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+}
+
+/* ===== Tarjeta principal ===== */
+.card {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 40px;
+  width: 750px; /* ← más ancha para mostrar toda la información */
+  color: white;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px);
+  text-align: center;
+  animation: fadeIn 0.8s ease;
+}
+
+/* ===== Logo ===== */
+.Logo {
+  width: 90px;
+  margin-bottom: 10px;
+}
+
+/* ===== Títulos ===== */
+h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: 15px;
+  margin-bottom: 25px;
+  color: #e6e6e6;
+}
+
+/* ===== Sección de tareas ===== */
+.tareas-section {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.tareas-section h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.tareas-section ul {
+  list-style: none;
+}
+
+.tareas-section li {
+  background: rgba(255, 255, 255, 0.08);
+  margin: 5px 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.tareas-section li:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== Formulario de comentarios ===== */
+.comentarios-section {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.comentarios-section h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 90px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+  resize: none;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+}
+
+textarea:focus {
+  outline: 2px solid #66aaff;
+}
+
+/* ===== Subir archivo ===== */
+.file-group {
+  margin-top: 10px;
+}
+
+.file-label {
+  display: inline-block;
+  background: #007bff;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.file-label:hover {
+  background: #005fcc;
+}
+
+#archivo {
+  display: none;
+}
+
+.file-name {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  color: #ddd;
+}
+
+/* ===== Botón principal ===== */
+button {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #28a745;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #218838;
+}
+
+/* ===== Lista de comentarios ===== */
+.comentarios-lista {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: left;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.comentarios-lista h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.comentario {
+  margin-bottom: 15px;
+}
+
+.comentario p {
+  margin-bottom: 5px;
+  color: #f0f0f0;
+}
+
+.comentario small {
+  color: #bbb;
+}
+
+/* ===== Enlace volver ===== */
+.back-link {
+  display: inline-block;
+  margin-top: 20px;
+  color: #ddd;
+  text-decoration: none;
+  font-size: 15px;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: white;
+}
+
+/* ===== Animación ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

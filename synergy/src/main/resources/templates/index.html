@@ -1,54 +1,34 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Synergy – Proyectos Ambientales</title>
-  <link rel="stylesheet" th:href="@{/desyng.css}">
-  <link rel="stylesheet" href="../../../../target/classes/static/synergy-enhancements.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prueba Hero con Fondo</title>
+  <link rel="stylesheet" href="/synergy/src/main/resources/static/css/Index.css">
 </head>
 <body>
-  <header>
-    <h1>Synergy – Gestión de Proyectos Ambientales</h1>
+      <header>
+    <h1>Synergy</h1>
     <nav>
       <a th:href="@{/}">Inicio</a>
       <a th:href="@{/registrarse}">Registrarse</a>
-      <button onclick="location.href='/registrarse'">Registrarse</button>
       <a th:href="@{/login}">Login</a>
       <a th:href="@{/acerca}">Acerca</a>
       <a th:href="@{/registrarproyecto}">Registrar Proyecto</a>
       <a th:href="@{/listaproyectos}">Lista de proyectos</a>
     </nav>
   </header>
+    
 
-  <main class="container">
-    <section class="hero">
-      <div class="intro">
-        <h2>Bienvenido a Synergy</h2>
-        <p>
-          Plataforma web para registrar y gestionar proyectos ambientales comunitarios.
-        </p>
-        <div class="cta">
-          <button class="btn" onclick="location.href='/listaproyectos'">Ver proyectos</button>
-          <button class="btn secondary" onclick="location.href='/registrarse'">Registrarse</button>
-        </div>
-      </div>
-    </section>
+  <section class="hero">
+    <div class="overlay"></div>
 
-    <section class="form-container">
-      <h3>🎯 Objetivo General</h3>
-      <p>
-        Desarrollar un aplicativo web llamado <strong>Synergy</strong>, orientado a la 
-        <strong>gestión de proyectos ambientales</strong>, que promueva la 
-        <strong>colaboración entre líderes, voluntarios y ciudadanos</strong>, 
-        facilitando el <strong>registro, seguimiento y administración de iniciativas ecológicas</strong> 
-        a través de una <strong>interfaz accesible y funcional</strong>.
-      </p>
-    </section>
-  </main>
+    <div class="hero-content">
+      <h2>Bienvenido a Synergy</h2>
+      <p>Un espacio para la colaboración ecológica y comunitaria</p>
+      <button>Comenzar</button>
+    </div>
+  </section>
 
-  <footer class="footer">
-    © 2025 Synergy • Demo educativa
-  </footer>
 </body>
 </html>
