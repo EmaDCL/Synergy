@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro – Synergy</title>
+  <link rel="stylesheet" href="/synergy/src/main/resources/static/Registro.css">
+</head>
+<body>
+
+    <section class="hero">
+    <!-- Fondo -->
+    <div class="overlay"></div>
+    
+  <div class="container">
+    <div class="card">
+      <!-- Logo -->
+      <img src="logo.png" alt="Logo Synergy" class="Logo">
+
+      <!-- Título -->
+      <h1>Regístrate</h1>
+      <p class="subtitle">Crea tu cuenta de Synergy</p>
+
+      <!-- Formulario Thymeleaf -->
+      <form th:action="@{/usuarios/guardar}" th:object="${usuario}" method="post">
+        
+        <input type="hidden" th:field="*{idUsuario}" /> 
+
+        <div class="input-group">
+          <input type="text" th:field="*{nombreUsuario}" required>
+          <label>Nombre de Usuario</label>
+        </div>
+
+        <div class="input-group">
+          <input type="email" th:field="*{correo}" required>
+          <label>Correo electrónico</label>
+        </div>
+
+        <div class="input-group">
+          <input type="password" th:field="*{contraseña}" required>
+          <label>Contraseña</label>
+        </div>
+
+        <div class="input-group">
+          <input type="password" name="confirmarContraseña" required>
+          <label>Confirmar contraseña</label>
+        </div>
+
+        <!-- Campo oculto: el rol siempre será "usuario" -->
+        <input type="hidden" th:field="*{rol}" value="usuario" />
+
+        <button type="submit">Registrarse</button>
+
+        <p class="login-text">
+          ¿Ya tienes una cuenta? <a href="Login.html">Inicia sesión</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard – Usuarios</title>
+  <link rel="stylesheet" href="/synergy/src/main/resources/static/Admin_Usuarios_Dashboard.css">
+</head>
+<body>
+  <section class="hero">
+    <div class="overlay"></div>
+
+    <div class="container">
+      <div class="card">
+        <div class="header">
+          <div class="top-buttons">
+            <button class="btn-inicio" onclick="location.href='Administrador_Dashboard.html'">
+              Volver al Panel Principal
+            </button>
+          </div>
+
+          <h1>Synergy – Panel de Usuarios</h1>
+          <p class="subtitle">Aquí puedes gestionar los usuarios del sistema.</p>
+        </div>
+
+        <table class="project-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Correo</th>
+              <th>Rol</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Juan Pérez</td>
+              <td>juanperez@gmail.com</td>
+              <td>Usuario</td>
+              <td class="actions"><button class="btn-eliminar">Eliminar</button></td>
+            </tr>
+            <tr>
+              <td>María López</td>
+              <td>marialopez@gmail.com</td>
+              <td>Usuario</td>
+              <td class="actions"><button class="btn-eliminar">Eliminar</button></td>
+            </tr>
+            <tr>
+              <td>Carlos Ruiz</td>
+              <td>carlosruiz@gmail.com</td>
+              <td>Administrador</td>
+              <td class="actions"><button class="btn-eliminar">Eliminar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
