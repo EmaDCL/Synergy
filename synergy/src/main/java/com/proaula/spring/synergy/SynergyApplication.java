@@ -1,4 +1,4 @@
-package com.proaula.spring.synergy.synergy;
+package com.proaula.spring.synergy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
