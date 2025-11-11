@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.proaula.spring.synergy.Model.Usuarios;
 import com.proaula.spring.synergy.Service.usuarioService;
+
 @RestController
 @RequestMapping("/api/usuarios")
 public class usuarioController {
@@ -32,7 +33,8 @@ public class usuarioController {
 
     @GetMapping("/{id}")
     public Usuarios obtenerUsuario(@PathVariable Long id) {
-        return usuarioService.buscarPorId(id);
+        return usuarioService.buscarPorId(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
     @DeleteMapping("/{id}")
