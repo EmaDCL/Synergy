@@ -1,25 +1,37 @@
 package com.proaula.spring.synergy.synergy.Model;
 
-public class Usuarios {
-    private int id;
-    private String nombre;
-    private String email;
-    private String password;
-    private String role;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-    public Usuarios(int id, String nombre, String email, String password, String role) {
-        this.id = id;
-        this.nombre = nombre;
-        this.email = email;
-        this.password = password;
-        this.role = role;
+@Entity
+@Table(name = "usuarios")
+public class Usuarios {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String nombre;
+    private String correo;
+    private String rol;
+
+    public Usuarios() {
     }
 
-    public int getId() {
+    public Usuarios(String nombre, String correo, String rol) {
+        this.nombre = nombre;
+        this.correo = correo;
+        this.rol = rol;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -31,27 +43,21 @@ public class Usuarios {
         this.nombre = nombre;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCorreo() {
+        return correo;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
-    public String getPassword() {
-        return password;
+    public String getRol() {
+        return rol;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
-    public String getRole() {
-        return role;
-    }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
 }
