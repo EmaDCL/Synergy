@@ -8,8 +8,8 @@
 		<version>3.5.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.synergycon</groupId>
-	<artifactId>synergycon</artifactId>
+	<groupId>com.synergy</groupId>
+	<artifactId>synergy</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>synergycon</name>
 	<description>Demo project for Spring Boot</description>
