@@ -3,6 +3,8 @@ package com.proaula.spring.synergy.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,23 +24,33 @@ public class usuarioController {
     private usuarioService usuarioService;
 
     @GetMapping
-    public List<Usuarios> listarUsuarios() {
-        return usuarioService.listarUsuarios();
+    public ResponseEntity<List<Usuarios>> listarUsuarios() {
+        return ResponseEntity.ok(usuarioService.listarUsuarios());
     }
 
     @PostMapping
-    public Usuarios guardarUsuario(@RequestBody Usuarios usuario) {
-        return usuarioService.guardarUsuario(usuario);
+    public ResponseEntity<?> guardarUsuario(@RequestBody Usuarios usuario) {
+        try {
+            Usuarios nuevo = usuarioService.guardarUsuario(usuario);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
-    public Usuarios obtenerUsuario(@PathVariable Long id) {
+    public ResponseEntity<?> obtenerUsuario(@PathVariable Long id) {
         return usuarioService.buscarPorId(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .<ResponseEntity<?>>map(usuario -> ResponseEntity.ok(usuario))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado"));
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarUsuario(@PathVariable Long id) {
-        usuarioService.eliminarUsuario(id);
+    public ResponseEntity<?> eliminarUsuario(@PathVariable Long id) {
+        if (usuarioService.buscarPorId(id).isPresent()) {
+            usuarioService.eliminarUsuario(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
     }
 }

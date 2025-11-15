@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import com.proaula.spring.synergy.Model.Usuarios;
 import com.proaula.spring.synergy.Repository.usuarioRepository;
 
-import io.micrometer.common.lang.NonNull;
-
 @Service
 public class usuarioService {
 
@@ -21,7 +19,14 @@ public class usuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Usuarios guardarUsuario(@NonNull Usuarios usuario) {
+    public Usuarios guardarUsuario(Usuarios usuario) {
+
+        // Validar si ya existe un correo
+        usuarioRepository.findByCorreo(usuario.getCorreo())
+                .ifPresent(u -> {
+                    throw new RuntimeException("El correo ya está registrado");
+                });
+
         return usuarioRepository.save(usuario);
     }
 
@@ -29,8 +34,8 @@ public class usuarioService {
         return usuarioRepository.findById(id);
     }
 
-    public void eliminarUsuario(@NonNull Long id) {
+    public void eliminarUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }
-
 }
+
