@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SynergyApplication",
+            "request": "launch",
+            "mainClass": "com.proaula.spring.synergy.SynergyApplication",
+            "projectName": "synergy"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-SynergyApplication<synergy>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

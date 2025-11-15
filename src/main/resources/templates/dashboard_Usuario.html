@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Usuario – Synergy</title>
+  <link rel="stylesheet" href="/Administrador_Dashboard.css">
+</head>
+<body>
+
+  <div class="hero">
+    <div class="overlay"></div>
+
+    <div class="container">
+      <div class="card">
+
+        <!-- ENCABEZADO -->
+        <div class="header">
+          <div class="top-buttons">
+            <button class="btn-inicio" onclick="location.href='menu.html'">🏠 Inicio</button>
+            <button class="btn-usuarios" onclick="location.href='/logout'">🚪 Cerrar sesión</button>
+          </div>
+
+          <h1>Bienvenido <span th:text="${usuario.nombre}">Usuario</span></h1>
+          <p class="subtitle">Selecciona una acción para continuar.</p>
+        </div>
+
+        <!-- MENÚ PRINCIPAL DE OPCIONES -->
+        <div class="menu-options">
+
+          <button class="menu-btn" onclick="location.href='/usuario/proyectos'">
+            📂 Ver proyectos
+          </button>
+
+          <button class="menu-btn" onclick="location.href='/usuario/proyectos/participar'">
+            🤝 Participar en proyecto
+          </button>
+
+          <!-- BOTÓN CORREGIDO -->
+          <button class="menu-btn" onclick="location.href='/proyectos/registro'">
+            ➕ Crear un proyecto
+          </button>
+
+          <button class="menu-btn" onclick="location.href='/usuario/proyectos/salir'">
+            🚪 Salir de un proyecto
+          </button>
+
+          <button class="menu-btn" onclick="location.href='/usuario/credenciales'">
+            🔐 Cambiar mis credenciales
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
