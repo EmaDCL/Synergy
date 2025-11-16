@@ -1,6 +1,5 @@
 package com.proaula.spring.synergy.Controller;
 
-
 import java.util.Optional;
 
 import com.proaula.spring.synergy.Model.Comentario;
@@ -28,7 +27,6 @@ public class ComentarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-
     // VER comentarios de un proyecto
 
     @GetMapping("/{id}/comentarios")
@@ -47,13 +45,12 @@ public class ComentarioController {
         return "Comentarios_Proyectos"; // nombre EXACTO DEL HTML
     }
 
-
     // ENVIAR comentario
 
     @PostMapping("/enviar-comentario")
     public String enviarComentario(@ModelAttribute Comentario comentario,
-                                   @RequestParam Long proyectoId,
-                                   @RequestParam Long usuarioId) {
+            @RequestParam Long proyectoId,
+            @RequestParam Long usuarioId) {
 
         Proyecto proyecto = proyectoService.buscarPorId(proyectoId);
         Optional<Usuarios> usuario = usuarioService.buscarPorId(usuarioId);
@@ -63,23 +60,22 @@ public class ComentarioController {
         }
 
         comentario.setProyecto(proyecto);
-        comentario.setUsuario(usuario);
+        comentario.setProyecto(proyecto);
+        usuario.ifPresent(comentario::setUsuario);
 
         comentarioService.guardarComentario(comentario);
 
         return "redirect:/proyectos/" + proyectoId + "/comentarios";
     }
 
-
     // ELIMINAR comentario (opcional)
 
     @PostMapping("/comentarios/eliminar/{id}")
     public String eliminarComentario(@PathVariable Long id,
-                                     @RequestParam Long proyectoId) {
+            @RequestParam Long proyectoId) {
 
         comentarioService.eliminarComentario(id);
 
         return "redirect:/proyectos/" + proyectoId + "/comentarios";
     }
 }
-

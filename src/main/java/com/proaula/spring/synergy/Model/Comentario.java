@@ -23,9 +23,9 @@ public class Comentario {
     private Proyecto proyecto;
 
     // Relación con Usuario
-    @ManyToOne
+    @ManyToOne 
     @JoinColumn(name = "usuario_id")
-    private Optional<Usuarios> usuario;
+    private Usuarios usuario;  // ✅ Cambio aquí: quitamos Optional del campo
 
     // Se pone la fecha automáticamente
     @PrePersist
@@ -66,11 +66,12 @@ public class Comentario {
         this.proyecto = proyecto;
     }
 
+
     public Optional<Usuarios> getUsuario() {
-        return usuario;
+        return Optional.ofNullable(usuario);
     }
 
-    public void setUsuario(Optional<Usuarios> usuario) {
+    public void setUsuario(Usuarios usuario) {
         this.usuario = usuario;
     }
 }
