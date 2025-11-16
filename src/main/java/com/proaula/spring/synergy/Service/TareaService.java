@@ -30,6 +30,6 @@ public class TareaService {
         tareaRepository.deleteById(id);
     }
     public List<Tarea> tareasPorProyecto(Long proyectoId) {
-    return tareaRepository.findByProyectoId(proyectoId);
+    return tareaRepository.findByProyecto_Id(proyectoId);
 }
 }

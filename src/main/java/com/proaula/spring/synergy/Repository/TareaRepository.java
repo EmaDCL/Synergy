@@ -13,6 +13,6 @@ public interface TareaRepository extends JpaRepository<Tarea, Long> {
     // Buscar tareas por estado (opcional)
     Tarea findByEstado(String estado);
     
-    List<Tarea> findByProyectoId(Long proyectoId);
+    List<Tarea> findByProyecto_Id(Long proyectoId);
 
 }

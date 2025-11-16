@@ -2,11 +2,7 @@ package com.proaula.spring.synergy.Model;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tareas")
@@ -24,6 +20,11 @@ public class Tarea {
 
     private String estado; // Pendiente, En progreso, Completada
 
+
+    @ManyToOne
+    @JoinColumn(name = "proyecto_id")
+    private Proyecto proyecto;
+
     public Tarea() {}
 
     public Tarea(String titulo, String descripcion, LocalDate fechaEntrega, String estado) {
@@ -33,7 +34,6 @@ public class Tarea {
         this.estado = estado;
     }
 
-    // Getters y setters
     public Long getId() {
         return id;
     }
@@ -72,5 +72,14 @@ public class Tarea {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
     }
 }
