@@ -1,0 +1,196 @@
+/* ===== Estilo general ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", Arial, sans-serif;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  color: white;
+}
+
+/* ===== Fondo principal con efecto ===== */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-image: url('/synergy/src/main/resources/static/IMG/Background_Registro.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===== Capa de difuminado y transparencia ===== */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(5px);
+  z-index: 0;
+}
+
+/* ===== Contenedor central ===== */
+.container {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* ===== Tarjeta con efecto vidrio ===== */
+.card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  padding: 50px 45px;
+  width: 420px;
+  text-align: center;
+  animation: fadeIn 0.8s ease;
+}
+
+/* ===== Logo ===== */
+.Logo {
+  width: 180px;
+  margin-bottom: 15px;
+  filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));
+}
+
+/* ===== Títulos ===== */
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #e6e6e6;
+  margin-bottom: 30px;
+}
+
+/* ===== Campos de entrada ===== */
+.input-group {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 12px 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(3px);
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 8px rgba(144, 202, 249, 0.6);
+}
+
+.input-group textarea {
+  resize: vertical;
+  min-height: 80px;
+  padding-top: 20px;
+  font-family: inherit;
+}
+
+/* ===== Etiquetas flotantes ===== */
+.input-group label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.9rem;
+  pointer-events: none;
+  transition: 0.2s ease all;
+  background: transparent;
+  padding: 0 4px;
+}
+
+.input-group input:focus + label,
+.input-group input:valid + label,
+.input-group textarea:focus + label,
+.input-group textarea:valid + label {
+  top: -8px;
+  left: 8px;
+  font-size: 0.75rem;
+  color: #90caf9;
+}
+
+/* ===== Botón elegante ===== */
+button {
+  width: 100%;
+  background: linear-gradient(135deg, #1a73e8, #0059ff);
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 50px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 89, 255, 0.3);
+}
+
+button:hover {
+  background: linear-gradient(135deg, #0059ff, #0037b3);
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(0, 115, 255, 0.7);
+}
+
+/* ===== Enlace inferior ===== */
+.login-text {
+  margin-top: 25px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+.login-text a {
+  color: #90caf9;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.login-text a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+/* ===== Animación ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Adaptación móvil ===== */
+@media (max-width: 768px) {
+  .card {
+    width: 90%;
+    padding: 35px 25px;
+  }
+  .overlay {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
