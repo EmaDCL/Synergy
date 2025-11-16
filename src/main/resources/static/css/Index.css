@@ -14,7 +14,7 @@ body {
 .hero {
   position: relative;
   height: 100vh;
-  background-image: url('/synergy/src/main/resources/static/IMG/Background.jpg'); /* Cambia a tu imagen */
+  background-image: url("/IMG/Background.jpg"); /* Cambia a tu imagen */
   background-size: cover;
   background-position: center;
   display: flex;

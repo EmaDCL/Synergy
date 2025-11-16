@@ -8,7 +8,7 @@
 
 /* ===== Fondo general ===== */
 body {
-  background: url('/synergy/src/main/resources/static/IMG/Background_Registro.jpg') no-repeat center center fixed;
+  background: url("/IMG/Background_Registro.jpg") no-repeat center center fixed;
   background-size: cover;
   color: #222;
   min-height: 100vh;
