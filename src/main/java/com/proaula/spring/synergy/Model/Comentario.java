@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Entity
+@Table(name = "comentario") 
 public class Comentario {
 
     @Id
@@ -25,7 +26,7 @@ public class Comentario {
     // Relación con Usuario
     @ManyToOne 
     @JoinColumn(name = "usuario_id")
-    private Usuarios usuario;  // ✅ Cambio aquí: quitamos Optional del campo
+    private Usuarios usuario;
 
     // Se pone la fecha automáticamente
     @PrePersist
@@ -65,7 +66,6 @@ public class Comentario {
     public void setProyecto(Proyecto proyecto) {
         this.proyecto = proyecto;
     }
-
 
     public Optional<Usuarios> getUsuario() {
         return Optional.ofNullable(usuario);
