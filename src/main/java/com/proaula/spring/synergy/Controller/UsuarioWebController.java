@@ -1,36 +1,33 @@
 package com.proaula.spring.synergy.Controller;
 
+import com.proaula.spring.synergy.Model.Usuarios;
+import com.proaula.spring.synergy.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import com.proaula.spring.synergy.Model.Usuarios;
-import com.proaula.spring.synergy.Service.usuarioService;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UsuarioWebController {
 
     @Autowired
-    private usuarioService usuarioService;
+    private UsuarioService usuarioService;
 
     @GetMapping("/registro")
-    public String mostrarFormularioRegistro(Model model) {
+    public String mostrarRegistro(Model model) {
         model.addAttribute("usuario", new Usuarios());
-        return "registro"; 
+        return "registro";
     }
 
     @PostMapping("/registro")
-    public String registrarUsuario(@ModelAttribute("usuario") Usuarios usuario, Model model) {
+    public String registrar(@ModelAttribute("usuario") Usuarios usuario) {
+        usuarioService.guardarUsuario(usuario);
+        return "redirect:/login";
+    }
 
-        try {
-            usuarioService.guardarUsuario(usuario);
-            return "redirect:/login";
-        } catch (RuntimeException e) {
-            model.addAttribute("error", e.getMessage());
-            return "registro";
-        }
+    @GetMapping("/login")
+    public String mostrarLogin(Model model){
+        model.addAttribute("loginDTO", new Object());
+        return "login";
     }
 }

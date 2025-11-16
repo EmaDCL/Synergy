@@ -1,5 +1,5 @@
 package com.proaula.spring.synergy.Repository;
 
-public class InscripcionRepository {
+public class ParticipacionRepository {
 
 }

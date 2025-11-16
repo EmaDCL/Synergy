@@ -1,32 +1,24 @@
 package com.proaula.spring.synergy.Service;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.proaula.spring.synergy.Model.Usuarios;
+import com.proaula.spring.synergy.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.proaula.spring.synergy.Model.Usuarios;
-import com.proaula.spring.synergy.Repository.usuarioRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
-public class usuarioService {
+public class UsuarioService {
 
     @Autowired
-    private usuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
     public List<Usuarios> listarUsuarios() {
         return usuarioRepository.findAll();
     }
 
     public Usuarios guardarUsuario(Usuarios usuario) {
-
-        // Validar si ya existe un correo
-        usuarioRepository.findByCorreo(usuario.getCorreo())
-                .ifPresent(u -> {
-                    throw new RuntimeException("El correo ya está registrado");
-                });
-
         return usuarioRepository.save(usuario);
     }
 
@@ -34,8 +26,11 @@ public class usuarioService {
         return usuarioRepository.findById(id);
     }
 
+    public Optional<Usuarios> buscarPorCorreo(String correo){
+        return usuarioRepository.findByCorreo(correo);
+    }
+
     public void eliminarUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }
 }
-
