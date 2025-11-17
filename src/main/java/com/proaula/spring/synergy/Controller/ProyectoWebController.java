@@ -21,7 +21,6 @@ public class ProyectoWebController {
     private ProyectoService proyectoService;
 
 
-
     // REGISTRAR PROYECTO 
 
     @GetMapping("/registrar")

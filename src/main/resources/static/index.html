@@ -7,11 +7,11 @@
   <link rel="stylesheet" href="/css/Index.css">
 </head>
 <body>
-      <header>
+  <header>
     <h1>Synergy</h1>
     <nav>
       <a th:href="@{/}">Inicio</a>
-      <a th:href="@{/registrarse}">Registrarse</a>
+      <a th:href="@{Registrarse}">Registrarse</a>
       <a th:href="@{/login}">Login</a>
       <a th:href="@{/acerca}">Acerca</a>
       <a th:href="@{/registrarproyecto}">Registrar Proyecto</a>
@@ -20,7 +20,6 @@
       <a th:href="@{/historial}">Historial de Acciones</a>
     </nav>
   </header>
-    
 
   <section class="hero">
     <div class="overlay"></div>
@@ -28,9 +27,8 @@
     <div class="hero-content">
       <h2>Bienvenido a Synergy</h2>
       <p>Un espacio para la colaboración ecológica y comunitaria</p>
-      <button>Comenzar</button>
-    </div>
+      <a th:href="@{/Registrarse}" class="btn-comenzar">Comenzar</a>
+        </div>
   </section>
-
 </body>
 </html>

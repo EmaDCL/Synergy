@@ -6,17 +6,104 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: white;
+  overflow-x: hidden;
+}
+
+/* === Estilo del header === */
+header {
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+header:hover {
+  box-shadow: 0 6px 20px rgba(42, 157, 143, 0.3);
+}
+
+/* === Estilo del título === */
+header h1 {
+  font-size: 2rem;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #2a9d8f, #48cae4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: transform 0.3s ease;
+}
+
+header h1:hover {
+  transform: scale(1.05);
+}
+
+/* === Estilo del menú === */
+nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: #e0e0e0;
+  text-decoration: none;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de subrayado animado */
+nav a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #2a9d8f, #48cae4);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+nav a:hover::before {
+  width: 80%;
+}
+
+nav a:hover {
+  color: #48cae4;
+  background: rgba(42, 157, 143, 0.1);
+  transform: translateY(-2px);
+}
+
+nav a:active {
+  transform: translateY(0);
 }
 
 /* === Sección principal === */
 .hero {
   position: relative;
   height: 100vh;
-  background-image: url("/IMG/Background.jpg"); /* Cambia a tu imagen */
+  background-image: url("/IMG/Background.jpg");
   background-size: cover;
   background-position: center;
+  background-attachment: fixed; /* Efecto parallax */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,11 +111,11 @@ body {
   overflow: hidden;
 }
 
-/* === Capa oscura sobre la imagen === */
+/* === Capa oscura con gradiente === */
 .overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.55);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(42, 157, 143, 0.3) 100%);
   z-index: 1;
 }
 
@@ -36,74 +123,169 @@ body {
 .hero-content {
   position: relative;
   z-index: 2;
-  padding: 20px;
+  padding: 40px;
+  animation: fadeInUp 1s ease-out;
+  max-width: 800px;
 }
 
-.hero-content h1 {
-  font-size: 3rem;
-  margin-bottom: 10px;
-  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-content h2 {
-  font-size: 70px;
+  font-size: 4rem;
+  margin-bottom: 20px;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+  font-weight: 800;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #ffffff, #48cae4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    filter: drop-shadow(0 0 10px rgba(72, 202, 228, 0.5));
+  }
+  to {
+    filter: drop-shadow(0 0 20px rgba(72, 202, 228, 0.8));
+  }
 }
 
 .hero-content p {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
+  font-size: 1.4rem;
+  margin-bottom: 30px;
+  color: #e0e0e0;
+  font-weight: 300;
+  line-height: 1.6;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* === BOTÓN MEJORADO === */
+.btn-comenzar {
+  display: inline-block;
+  background: linear-gradient(135deg, #2a9d8f, #48cae4);
   color: #ffffff;
-}
-
-/* === BOTÓN TRANSPARENTE CON BORDE BLANCO === */
-.hero-content button {
-  background: transparent; /* sin color de fondo */
-  color: #ffffff; /* texto blanco */
-  border: 2px solid #ffffff; /* borde blanco */
-  padding: 12px 25px;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-/* efecto al pasar el mouse */
-.hero-content button:hover {
-  background: rgba(255, 255, 255, 0.15); /* leve brillo */
-  transform: scale(1.05);
-}
-
-/* === Estilo del header === */
-header {
-  background-color: #000; /* negro */
-  color: white;
-  display: flex;
-  justify-content: space-between; /* título a la izquierda, menú a la derecha */
-  align-items: center;
-  padding: 15px 40px;
-  position: relative; /* puedes cambiar a fixed si quieres que quede siempre arriba */
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100; /* por encima del fondo */
-}
-
-/* === Estilo del título === */
-header h1 {
-  font-size: 1.5rem;
-  margin: 0;
-}
-
-/* === Estilo del menú === */
-nav a {
-  color: white;
   text-decoration: none;
-  margin-left: 20px;
-  font-size: 1rem;
-  transition: color 0.3s;
+  padding: 15px 40px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 8px 20px rgba(42, 157, 143, 0.4);
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+  letter-spacing: 1px;
 }
 
-/* Efecto al pasar el mouse */
-nav a:hover {
-  color: #2a9d8f; /* verde del tema */
+/* Efecto de brillo animado */
+.btn-comenzar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-comenzar:hover::before {
+  left: 100%;
+}
+
+.btn-comenzar:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(42, 157, 143, 0.6);
+  border-color: #48cae4;
+}
+
+.btn-comenzar:active {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 15px rgba(42, 157, 143, 0.4);
+}
+
+/* === Responsive Design === */
+@media (max-width: 1024px) {
+  header {
+    padding: 15px 30px;
+  }
+  
+  header h1 {
+    font-size: 1.6rem;
+  }
+  
+  nav {
+    gap: 8px;
+  }
+  
+  nav a {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+  }
+  
+  .hero-content h2 {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    padding: 15px 20px;
+    gap: 15px;
+  }
+  
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  nav a {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+  
+  .hero-content h2 {
+    font-size: 2.5rem;
+  }
+  
+  .hero-content p {
+    font-size: 1.1rem;
+  }
+  
+  .btn-comenzar {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.4rem;
+  }
+  
+  .hero-content h2 {
+    font-size: 2rem;
+  }
+  
+  .hero-content p {
+    font-size: 1rem;
+  }
+  
+  nav a {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
 }

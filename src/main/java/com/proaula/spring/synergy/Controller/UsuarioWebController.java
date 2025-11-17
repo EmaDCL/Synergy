@@ -13,13 +13,13 @@ public class UsuarioWebController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping("/registro")
+    @GetMapping("/registrarse")
     public String mostrarRegistro(Model model) {
         model.addAttribute("usuario", new Usuarios());
-        return "registro";
+        return "Registro";
     }
 
-    @PostMapping("/registro")
+    @PostMapping("/registrarse")
     public String registrar(@ModelAttribute("usuario") Usuarios usuario) {
         usuarioService.guardarUsuario(usuario);
         return "redirect:/login";
