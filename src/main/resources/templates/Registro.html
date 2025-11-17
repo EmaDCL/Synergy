@@ -8,60 +8,54 @@
 </head>
 <body>
 
-  <section class="hero">
-    <!-- Fondo -->
-    <div class="overlay"></div>
-    
-    <div class="container">
-      <div class="card">
-        <!-- Logo -->
-        <img th:src="@{/img/logo.png}" alt="Logo Synergy" class="Logo">
+<section class="hero">
+  <div class="overlay"></div>
+  
+  <div class="container">
+    <div class="card">
 
-        <!-- Título -->
-        <h1>Regístrate</h1>
-        <p class="subtitle">Crea tu cuenta de Synergy</p>
+      <img th:src="@{/img/logo.png}" alt="Logo Synergy" class="Logo">
 
-        <!-- CORREGIDO: Campos coinciden con Usuarios.java -->
-        <form th:action="@{/registrarse}" th:object="${usuario}" method="post">
-          
-          <!-- Campo oculto para ID (se genera automáticamente) -->
-          <input type="hidden" th:field="*{id}" /> 
+      <h1>Regístrate</h1>
+      <p class="subtitle">Crea tu cuenta de Synergy</p>
 
-          <div class="input-group">
-            <!-- CORREGIDO: nombre (no nombreUsuario) -->
-            <input type="text" th:field="*{nombre}" required>
-            <label>Nombre de Usuario</label>
-          </div>
+      <form th:action="@{/registrarse}" th:object="${usuario}" method="post">
 
-          <div class="input-group">
-            <!-- CORRECTO: correo -->
-            <input type="email" th:field="*{correo}" required>
-            <label>Correo electrónico</label>
-          </div>
+        <input type="hidden" th:field="*{id}">
 
-          <div class="input-group">
-            <!-- CORREGIDO: contrasena (no password ni contraseña) -->
-            <input type="password" th:field="*{contrasena}" required>
-            <label>Contraseña</label>
-          </div>
+        <div class="input-group">
+          <input type="text" th:field="*{nombre}" required>
+          <label>Nombre</label>
+        </div>
 
-          <div class="input-group">
-            <input type="password" name="confirmarContrasena" required>
-            <label>Confirmar contraseña</label>
-          </div>
+        <div class="input-group">
+          <input type="email" th:field="*{correo}" required>
+          <label>Correo electrónico</label>
+        </div>
 
-          <!-- Campo oculto: el rol siempre será "Participante" -->
-          <!-- NOTA: rol es un ENUM, no String. Debes enviarlo correctamente -->
-          <input type="hidden" name="rol" value="Participante" />
+        <div class="input-group">
+          <input type="password" th:field="*{contrasena}" required>
+          <label>Contraseña</label>
+        </div>
 
-          <button type="submit">Registrarse</button>
+        <div class="input-group">
+          <input type="password" name="confirmarContrasena" required>
+          <label>Confirmar contraseña</label>
+        </div>
 
-          <p class="login-text">
-            ¿Ya tienes una cuenta? <a th:href="@{/login}">Inicia sesión</a>
-          </p>
-        </form>
-      </div>
+        <!-- CAMBIO IMPORTANTE -->
+        <input type="hidden" th:field="*{rol}" value="Participante">
+
+        <button type="submit">Registrarse</button>
+
+        <p class="login-text">
+          ¿Ya tienes una cuenta? <a th:href="@{/login}">Inicia sesión</a>
+        </p>
+      </form>
+
     </div>
-  </section>
+  </div>
+</section>
+
 </body>
 </html>

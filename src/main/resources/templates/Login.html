@@ -4,46 +4,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Iniciar sesión – Synergy</title>
-
   <link rel="stylesheet" th:href="@{/css/Login.css}">
 </head>
 <body>
 
-  <section class="hero">
+<section class="hero">
 
-    <div class="overlay"></div>
+  <div class="overlay"></div>
 
-    <div class="card">
-      
-      <img th:src="@{/img/Logo.png}" alt="Logo Synergy" class="Logo">
+  <div class="card">
+    
+    <img th:src="@{/img/Logo.png}" alt="Logo Synergy" class="Logo">
 
-      
-      <h1>Inicia sesión</h1>
-      <p class="subtitle">Accede a tu cuenta de Synergy</p>
+    <h1>Inicia sesión</h1>
+    <p class="subtitle">Accede a tu cuenta de Synergy</p>
 
-   
-      <form th:action="@{/login}" method="post">
-        <div class="input-group">
-          
-          <input type="email" name="correo" required>
-          <label>Correo electrónico</label>
-        </div>
+    <form th:action="@{/login}" method="post">
 
-        <div class="input-group">
-          
-          <input type="password" name="contrasena" required>
-          <label>Contraseña</label>
-        </div>
+      <p th:if="${error}" th:text="${error}" style="color:red; margin-bottom:10px;"></p>
 
-        <button type="submit">Iniciar sesión</button>
+      <div class="input-group">
+        <input type="email" name="correo" required>
+        <label>Correo electrónico</label>
+      </div>
 
-        <p class="login-text">
- 
-          ¿No tienes una cuenta? <a th:href="@{/registrarse}">Regístrate</a>
-        </p>
-      </form>
-    </div>
-  </section>
+      <div class="input-group">
+        <input type="password" name="contrasena" required>
+        <label>Contraseña</label>
+      </div>
+
+      <button type="submit" class="btn-comenzar">Iniciar sesión</button>
+
+      <p class="login-text">
+        ¿No tienes una cuenta? <a th:href="@{/registrarse}">Regístrate</a>
+      </p>
+
+    </form>
+  </div>
+</section>
 
 </body>
 </html>

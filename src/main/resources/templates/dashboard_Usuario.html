@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard de Usuario – Synergy</title>
-  <link rel="stylesheet" href="/css/Administrador_Dashboard.css">
+  <link rel="stylesheet" href="/css/Usuarios_Dashboard.css">
 </head>
 <body>
 
@@ -17,8 +17,13 @@
         <!-- ENCABEZADO -->
         <div class="header">
           <div class="top-buttons">
-            <button class="btn-inicio" onclick="location.href='menu.html'">🏠 Inicio</button>
-            <button class="btn-usuarios" onclick="location.href='/logout'">🚪 Cerrar sesión</button>
+            
+            <!-- Inicio -->
+            <a th:href="@{/menu}" class="btn-inicio">🏠 Inicio</a>
+
+            <!-- Logout -->
+            <a th:href="@{/logout}" class="btn-usuarios">🚪 Cerrar sesión</a>
+
           </div>
 
           <h1>Bienvenido <span th:text="${usuario.nombre}">Usuario</span></h1>
@@ -27,27 +32,25 @@
 
         <!-- MENÚ PRINCIPAL DE OPCIONES -->
         <div class="menu-options">
+        
+          <a th:href="@{/proyectos/registro}" class="menu-btn">Registrar Proyecto</a>
 
-          <button class="menu-btn" onclick="location.href='/usuario/proyectos'">
-            📂 Ver proyectos
-          </button>
 
-          <button class="menu-btn" onclick="location.href='/usuario/proyectos/participar'">
+          <a th:href="@{/usuario/proyectos/participar}" class="menu-btn">
             🤝 Participar en proyecto
-          </button>
+          </a>
 
-          <!-- BOTÓN CORREGIDO -->
-          <button class="menu-btn" onclick="location.href='/proyectos/registro'">
+          <a th:href="@{/proyectos/registro}" class="menu-btn">
             ➕ Crear un proyecto
-          </button>
+          </a>
 
-          <button class="menu-btn" onclick="location.href='/usuario/proyectos/salir'">
+          <a th:href="@{/usuario/proyectos/salir}" class="menu-btn">
             🚪 Salir de un proyecto
-          </button>
+          </a>
 
-          <button class="menu-btn" onclick="location.href='/usuario/credenciales'">
+          <a th:href="@{/usuario/credenciales}" class="menu-btn">
             🔐 Cambiar mis credenciales
-          </button>
+          </a>
 
         </div>
 
