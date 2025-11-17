@@ -23,11 +23,11 @@ public class ProyectoWebController {
 
     // REGISTRAR PROYECTO 
 
-    @GetMapping("/registrar")
+    @GetMapping("/registro")
     public String mostrarRegistro(Model model) {
         model.addAttribute("proyecto", new Proyecto());
         model.addAttribute("proyectos", proyectoService.listar());
-        return "RegistroProyectos";
+        return "registro_proyectos";
     }
 
     // GUARDAR PROYECTO 
@@ -40,7 +40,7 @@ public class ProyectoWebController {
         model.addAttribute("mensajeExito", "Proyecto registrado correctamente");
         model.addAttribute("proyecto", new Proyecto());
         model.addAttribute("proyectos", proyectoService.listar());
-        return "RegistroProyectos";
+        return "registro_proyectos";
     }
 
     // LISTAR PROYECTOS 

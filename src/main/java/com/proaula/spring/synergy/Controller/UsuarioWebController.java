@@ -13,10 +13,11 @@ public class UsuarioWebController {
     @Autowired
     private UsuarioService usuarioService;
 
+
     @GetMapping("/registrarse")
     public String mostrarRegistro(Model model) {
         model.addAttribute("usuario", new Usuarios());
-        return "Registro";
+        return "registro";
     }
 
     @PostMapping("/registrarse")

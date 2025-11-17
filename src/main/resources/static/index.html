@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
     <h1>Synergy</h1>
     <nav>
       <a th:href="@{/}">Inicio</a>
-      <a th:href="@{Registrarse}">Registrarse</a>
+      <a th:href="@{/registrarse}">Registrarse</a>
       <a th:href="@{/login}">Login</a>
       <a th:href="@{/acerca}">Acerca</a>
       <a th:href="@{/registrarproyecto}">Registrar Proyecto</a>
@@ -27,7 +27,7 @@
     <div class="hero-content">
       <h2>Bienvenido a Synergy</h2>
       <p>Un espacio para la colaboración ecológica y comunitaria</p>
-      <a th:href="@{/Registrarse}" class="btn-comenzar">Comenzar</a>
+      <a th:href="@{/registrarse}" class="btn-comenzar">Comenzar</a>
         </div>
   </section>
 </body>
