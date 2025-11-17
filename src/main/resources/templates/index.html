@@ -1,21 +1,23 @@
+
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prueba Hero con Fondo</title>
-  <link rel="stylesheet" href="/css/Index.css">
+  <title>Synergy - Página Principal</title>
+  <link rel="stylesheet" th:href="@{/css/Index.css}">
 </head>
 <body>
   <header>
     <h1>Synergy</h1>
     <nav>
+
       <a th:href="@{/}">Inicio</a>
       <a th:href="@{/registrarse}">Registrarse</a>
       <a th:href="@{/login}">Login</a>
-      <a th:href="@{/acerca}">Acerca</a>
-      <a th:href="@{/registrarproyecto}">Registrar Proyecto</a>
-      <a th:href="@{/listaproyectos}">Lista de proyectos</a>
+      <a th:href="@{/dashboard}">Dashboard</a>
+      <a th:href="@{/proyectos/registro}">Registrar Proyecto</a>
+      <a th:href="@{/proyectos/mis-proyectos}">Mis Proyectos</a>
       <a th:href="@{/jerarquia}">Jerarquía de Proyectos</a>
       <a th:href="@{/historial}">Historial de Acciones</a>
     </nav>
@@ -27,8 +29,10 @@
     <div class="hero-content">
       <h2>Bienvenido a Synergy</h2>
       <p>Un espacio para la colaboración ecológica y comunitaria</p>
+
       <a th:href="@{/registrarse}" class="btn-comenzar">Comenzar</a>
-        </div>
+    </div>
   </section>
+  
 </body>
 </html>
