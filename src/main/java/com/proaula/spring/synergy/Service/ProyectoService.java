@@ -1,54 +1,17 @@
 package com.proaula.spring.synergy.Service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Service;
+import com.proaula.spring.synergy.Model.Proyecto;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.proaula.spring.synergy.Model.Proyecto;
-import com.proaula.spring.synergy.Repository.ProyectoRepository;
+import java.util.List;
 
-@Service
-public class ProyectoService {
+public interface ProyectoService {
 
-    @Autowired
-    private ProyectoRepository proyectoRepository;
+    List<Proyecto> listar();
 
-    @Autowired
-    private JdbcTemplate jdbc;
+    Proyecto guardar(Proyecto proyecto, MultipartFile archivo);
 
-    public List<Proyecto> listar() {
-        return proyectoRepository.findAll();
-    }
+    Proyecto buscarPorId(Long id);
 
-    public Proyecto guardar(Proyecto proyecto, MultipartFile archivo) {
-        try {
-            if (archivo != null && !archivo.isEmpty()) {
-                System.out.println("Archivo recibido: " + archivo.getOriginalFilename());
-            }
-
-            // Registrar al usuario como líder automáticamente
-            jdbc.update(
-                "INSERT IGNORE INTO lider_proyecto (id) VALUES (?)",
-                proyecto.getIdLider()
-            );
-
-            return proyectoRepository.save(proyecto);
-
-        } catch (DataAccessException e) {
-            System.out.println("❌ Error guardando proyecto: " + e.getMessage());
-            throw e;
-        }
-    }
-
-    public Proyecto buscarPorId(Long id) {
-        return proyectoRepository.findById(id).orElse(null);
-    }
-
-    public void eliminar(Long id) {
-        proyectoRepository.deleteById(id);
-    }
+    void eliminar(Long id);
 }

@@ -1,7 +1,8 @@
 package com.proaula.spring.synergy.Controller;
 
 import com.proaula.spring.synergy.Model.Usuarios;
-import com.proaula.spring.synergy.Service.usuarioService;
+import com.proaula.spring.synergy.Service.UsuarioService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ import java.util.List;
 public class usuarioController {
 
     @Autowired
-    private usuarioService usuarioService;
+    private UsuarioService usuarioService;
 
     @GetMapping
     public List<Usuarios> listar() {
