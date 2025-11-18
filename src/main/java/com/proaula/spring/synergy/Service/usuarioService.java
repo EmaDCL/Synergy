@@ -1,40 +1,21 @@
 package com.proaula.spring.synergy.Service;
 
 import com.proaula.spring.synergy.Model.Usuarios;
-import com.proaula.spring.synergy.Repository.usuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class usuarioService {
+public interface UsuarioService {
 
-    @Autowired
-    private usuarioRepository usuarioRepository;
+    List<Usuarios> listarUsuarios();
 
-    public List<Usuarios> listarUsuarios() {
-        return usuarioRepository.findAll();
-    }
+    Usuarios guardarUsuario(Usuarios usuario);
 
-    public Usuarios guardarUsuario(Usuarios usuario) {
-        return usuarioRepository.save(usuario);
-    }
+    Optional<Usuarios> buscarPorId(Long id);
 
-    public Optional<Usuarios> buscarPorId(Long id) {
-        return usuarioRepository.findById(id);
-    }
+    Optional<Usuarios> buscarPorCorreo(String correo);
 
-    public Optional<Usuarios> buscarPorCorreo(String correo){
-        return usuarioRepository.findByCorreo(correo);
-    }
+    void eliminarUsuario(Long id);
 
-    public void eliminarUsuario(Long id) {
-        usuarioRepository.deleteById(id);
-    }
-
-    public List<Usuarios> listarLideres() {
-        return usuarioRepository.findByRol(Usuarios.Rol.Lider);
-    }
+    List<Usuarios> listarLideres();
 }

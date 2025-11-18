@@ -2,10 +2,9 @@ package com.proaula.spring.synergy.Controller;
 
 import com.proaula.spring.synergy.Model.Usuarios;
 import com.proaula.spring.synergy.Model.Usuarios.Rol;
-import com.proaula.spring.synergy.Service.usuarioService;
+import com.proaula.spring.synergy.Service.UsuarioService;
 
 import jakarta.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,26 +12,26 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UsuarioWebController {
-    
+
     @Autowired
-    private usuarioService usuarioService;
-    
+    private UsuarioService usuarioService;
+
     @GetMapping("/")
     public String mostrarIndex() {
         return "index";
     }
-    
+
     @GetMapping("/index")
     public String index() {
         return "index";
     }
-    
+
     @GetMapping("/registrarse")
     public String mostrarRegistro(Model model) {
         model.addAttribute("usuario", new Usuarios());
         return "registro";
     }
-    
+
     @PostMapping("/registrarse")
     public String registrar(@ModelAttribute("usuario") Usuarios usuario) {
 
@@ -43,13 +42,13 @@ public class UsuarioWebController {
         usuarioService.guardarUsuario(usuario);
         return "redirect:/login";
     }
-    
+
     @GetMapping("/login")
     public String mostrarLogin(Model model) {
         model.addAttribute("loginDTO", new Object());
         return "login";
     }
-    
+
     @PostMapping("/login")
     public String procesarLogin(
             @RequestParam String correo,
@@ -81,6 +80,6 @@ public class UsuarioWebController {
 
         model.addAttribute("usuario", usuario);
 
-        return "dashboard_Usuario"; 
+        return "dashboard_Usuario";
     }
 }
