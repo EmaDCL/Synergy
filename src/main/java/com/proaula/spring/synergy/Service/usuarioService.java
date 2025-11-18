@@ -1,9 +1,9 @@
 package com.proaula.spring.synergy.Service;
 
-import com.proaula.spring.synergy.Model.Usuarios;
-
 import java.util.List;
 import java.util.Optional;
+
+import com.proaula.spring.synergy.Model.Usuarios;
 
 public interface UsuarioService {
 
