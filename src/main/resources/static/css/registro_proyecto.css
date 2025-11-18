@@ -1,5 +1,9 @@
 /* ===== Estilo general ===== */
+<<<<<<< HEAD
 * {
+=======
+*{
+>>>>>>> daa65a6 (reconeccion de repo pq salio se desconecto (solucion de css en el registrar proyecto))
   margin: 0;
   padding: 0;
   box-sizing: border-box;

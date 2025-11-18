@@ -29,7 +29,11 @@ public class UsuarioWebController {
     @GetMapping("/registrarse")
     public String mostrarRegistro(Model model) {
         model.addAttribute("usuario", new Usuarios());
+<<<<<<< HEAD
         return "registro";
+=======
+        return "Registro";
+>>>>>>> daa65a6 (reconeccion de repo pq salio se desconecto (solucion de css en el registrar proyecto))
     }
 
     @PostMapping("/registrarse")
@@ -46,7 +50,11 @@ public class UsuarioWebController {
     @GetMapping("/login")
     public String mostrarLogin(Model model) {
         model.addAttribute("loginDTO", new Object());
+<<<<<<< HEAD
         return "login";
+=======
+        return "Login";
+>>>>>>> daa65a6 (reconeccion de repo pq salio se desconecto (solucion de css en el registrar proyecto))
     }
 
     @PostMapping("/login")
