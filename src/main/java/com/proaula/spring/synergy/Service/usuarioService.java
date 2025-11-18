@@ -33,4 +33,8 @@ public class UsuarioService {
     public void eliminarUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }
+
+    public List<Usuarios> listarLideres() {
+        return usuarioRepository.findByRol(Usuarios.Rol.Lider);
+    }
 }

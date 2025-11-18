@@ -1,13 +1,10 @@
 package com.proaula.spring.synergy.Controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.proaula.spring.synergy.Model.Proyecto;
@@ -20,9 +17,7 @@ public class ProyectoWebController {
     @Autowired
     private ProyectoService proyectoService;
 
-
-    // REGISTRAR PROYECTO 
-
+    // Mostrar formulario
     @GetMapping("/registro")
     public String mostrarRegistro(Model model) {
         model.addAttribute("proyecto", new Proyecto());
@@ -30,25 +25,35 @@ public class ProyectoWebController {
         return "registro_proyectos";
     }
 
-    // GUARDAR PROYECTO 
-
+    // Guardar proyecto
     @PostMapping("/guardar")
-    public String guardarProyecto(@ModelAttribute Proyecto proyecto,
+    public String guardarProyecto(
+            @ModelAttribute Proyecto proyecto,
             @RequestParam("archivo") MultipartFile archivo,
-            Model model) { 
-            proyectoService.guardar(proyecto, archivo);
+            HttpSession session,
+            Model model) {
+
+        Long usuarioId = (Long) session.getAttribute("usuarioId");
+
+        if (usuarioId == null) {
+            return "redirect:/login";
+        }
+
+        // Asignar líder
+        proyecto.setIdLider(usuarioId);
+
+        proyectoService.guardar(proyecto, archivo);
+
         model.addAttribute("mensajeExito", "Proyecto registrado correctamente");
         model.addAttribute("proyecto", new Proyecto());
         model.addAttribute("proyectos", proyectoService.listar());
+
         return "registro_proyectos";
     }
-
-    // LISTAR PROYECTOS 
 
     @GetMapping("/mis-proyectos")
     public String listarProyectos(Model model) {
         model.addAttribute("proyectos", proyectoService.listar());
         return "Lista_Proyectos";
     }
-
 }

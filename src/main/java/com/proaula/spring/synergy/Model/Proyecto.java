@@ -4,13 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "proyectos")
@@ -24,20 +18,34 @@ public class Proyecto {
 
     private String descripcion;
 
+    @Column(name = "fecha_inicio")
     private LocalDate fechaInicio;
 
+    @Column(name = "fecha_fin")
     private LocalDate fechaFin;
 
-     @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column(name = "id_lider")
+    private Long idLider;
+
+    @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comentario> comentarios = new ArrayList<>();
 
     public Proyecto() {}
 
-    public Proyecto(String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin) {
+    public Proyecto(String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, Long idLider) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+        this.idLider = idLider;
+    }
+
+    public Long getIdLider() {
+        return idLider;
+    }
+
+    public void setIdLider(Long idLider) {
+        this.idLider = idLider;
     }
 
     public Long getId() {

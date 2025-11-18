@@ -36,7 +36,6 @@ public class UsuarioWebController {
     @PostMapping("/registrarse")
     public String registrar(@ModelAttribute("usuario") Usuarios usuario) {
 
-        // Si el rol no viene del formulario, asignarlo por defecto
         if (usuario.getRol() == null) {
             usuario.setRol(Rol.Participante);
         }
@@ -65,7 +64,9 @@ public class UsuarioWebController {
             return "login";
         }
 
+        // ✅ Solución: guardar el ID del usuario
         session.setAttribute("usuario", usuario);
+        session.setAttribute("usuarioId", usuario.getId());
 
         return "redirect:/dashboard";
     }
