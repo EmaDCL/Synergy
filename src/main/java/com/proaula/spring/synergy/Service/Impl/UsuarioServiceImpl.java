@@ -1,7 +1,7 @@
 package com.proaula.spring.synergy.Service.Impl;
 
 import com.proaula.spring.synergy.Model.Usuarios;
-import com.proaula.spring.synergy.Repository.usuarioRepository;
+import com.proaula.spring.synergy.Repository.UsuarioRepository;
 import com.proaula.spring.synergy.Service.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.Optional;
 public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
-    private usuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Override
     public List<Usuarios> listarUsuarios() {
