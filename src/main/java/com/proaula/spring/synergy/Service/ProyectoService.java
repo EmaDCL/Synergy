@@ -3,6 +3,7 @@ package com.proaula.spring.synergy.Service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +38,7 @@ public class ProyectoService {
 
             return proyectoRepository.save(proyecto);
 
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             System.out.println("❌ Error guardando proyecto: " + e.getMessage());
             throw e;
         }
