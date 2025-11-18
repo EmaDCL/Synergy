@@ -2,7 +2,7 @@ package com.proaula.spring.synergy.Controller;
 
 import com.proaula.spring.synergy.Model.Usuarios;
 import com.proaula.spring.synergy.Model.Usuarios.Rol;
-import com.proaula.spring.synergy.Service.UsuarioService;
+import com.proaula.spring.synergy.Service.usuarioService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class UsuarioWebController {
     
     @Autowired
-    private UsuarioService usuarioService;
+    private usuarioService usuarioService;
     
     @GetMapping("/")
     public String mostrarIndex() {
@@ -64,7 +64,6 @@ public class UsuarioWebController {
             return "login";
         }
 
-        // ✅ Solución: guardar el ID del usuario
         session.setAttribute("usuario", usuario);
         session.setAttribute("usuarioId", usuario.getId());
 

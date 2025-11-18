@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.proaula.spring.synergy.Model.Usuarios;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuarios, Long> {
+public interface usuarioRepository extends JpaRepository<Usuarios, Long> {
 
     Optional<Usuarios> findByCorreo(String correo);
 

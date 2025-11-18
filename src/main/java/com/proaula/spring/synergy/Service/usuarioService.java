@@ -1,7 +1,7 @@
 package com.proaula.spring.synergy.Service;
 
 import com.proaula.spring.synergy.Model.Usuarios;
-import com.proaula.spring.synergy.Repository.UsuarioRepository;
+import com.proaula.spring.synergy.Repository.usuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UsuarioService {
+public class usuarioService {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private usuarioRepository usuarioRepository;
 
     public List<Usuarios> listarUsuarios() {
         return usuarioRepository.findAll();

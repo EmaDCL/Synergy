@@ -7,7 +7,7 @@ import com.proaula.spring.synergy.Model.Proyecto;
 import com.proaula.spring.synergy.Model.Usuarios;
 import com.proaula.spring.synergy.Service.ComentarioService;
 import com.proaula.spring.synergy.Service.ProyectoService;
-import com.proaula.spring.synergy.Service.UsuarioService;
+import com.proaula.spring.synergy.Service.usuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ public class ComentarioController {
     private ProyectoService proyectoService;
 
     @Autowired
-    private UsuarioService usuarioService;
+    private usuarioService usuarioService;
 
     // VER comentarios de un proyecto
 
