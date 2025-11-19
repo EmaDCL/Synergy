@@ -1,69 +1,38 @@
 package com.proaula.spring.synergy.Model;
 
-
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "participacion")
 public class Participacion {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private ParticipacionId id;
 
-    // Relación con proyectos
     @ManyToOne
-    @JoinColumn(name = "proyecto_id", nullable = false)
-    private Proyecto proyecto;
-
-    // Relación con usuarios
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @MapsId("usuarioId")
+    @JoinColumn(name = "usuario_id")
     private Usuarios usuario;
 
-    @Column(name = "fecha_inscripcion")
-    private LocalDateTime fechaInscripcion = LocalDateTime.now();
+    @ManyToOne
+    @MapsId("proyectoId")
+    @JoinColumn(name = "proyecto_id")
+    private Proyecto proyecto;
 
     public Participacion() {}
 
-    public Participacion(Proyecto proyecto, Usuarios usuario) {
-        this.proyecto = proyecto;
+    public Participacion(Usuarios usuario, Proyecto proyecto) {
         this.usuario = usuario;
-        this.fechaInscripcion = LocalDateTime.now();
-    }
-
-    // Getters y Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Proyecto getProyecto() {
-        return proyecto;
-    }
-
-    public void setProyecto(Proyecto proyecto) {
         this.proyecto = proyecto;
+        this.id = new ParticipacionId(usuario.getId(), proyecto.getId());
     }
 
-    public Usuarios getUsuario() {
-        return usuario;
-    }
+    public ParticipacionId getId() { return id; }
+    public void setId(ParticipacionId id) { this.id = id; }
 
-    public void setUsuario(Usuarios usuario) {
-        this.usuario = usuario;
-    }
+    public Usuarios getUsuario() { return usuario; }
+    public void setUsuario(Usuarios usuario) { this.usuario = usuario; }
 
-    public LocalDateTime getFechaInscripcion() {
-        return fechaInscripcion;
-    }
-
-    public void setFechaInscripcion(LocalDateTime fechaInscripcion) {
-        this.fechaInscripcion = fechaInscripcion;
-    }
+    public Proyecto getProyecto() { return proyecto; }
+    public void setProyecto(Proyecto proyecto) { this.proyecto = proyecto; }
 }

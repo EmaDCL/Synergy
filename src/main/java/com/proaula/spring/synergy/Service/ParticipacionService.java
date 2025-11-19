@@ -1,7 +1,7 @@
 package com.proaula.spring.synergy.Service;
 
-import com.proaula.spring.synergy.Model.Participacion;
 import java.util.List;
+import com.proaula.spring.synergy.Model.Participacion;
 
 public interface ParticipacionService {
 
@@ -11,5 +11,5 @@ public interface ParticipacionService {
 
     boolean yaInscrito(Long proyectoId, Long usuarioId);
 
-    void eliminarParticipacion(Long id);
+    void eliminarParticipacion(Long proyectoId, Long usuarioId);
 }

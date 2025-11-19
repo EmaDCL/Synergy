@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,41 +13,50 @@
 
     <div class="container">
       <div class="card">
-        <!-- Botón de regreso al inicio -->
+
+        <!-- ENCABEZADO -->
         <div class="header">
-          <button class="btn-inicio" onclick="location.href='menu.html'">🏠 Volver al inicio</button>
+          <button class="btn-inicio" onclick="location.href='/dashboard'">🏠 Volver al inicio</button>
           <h1>Lista de Proyectos</h1>
           <p class="subtitle">Consulta los proyectos disponibles y participa en el que más te interese.</p>
         </div>
 
-        <!-- Tabla de proyectos -->
+        <!-- TABLA -->
         <table class="project-table">
           <thead>
             <tr>
               <th>ID</th>
               <th>Nombre</th>
               <th>Descripción</th>
-              <th>Fecha</th>
+              <th>Fecha Inicio</th>
               <th>Acción</th>
             </tr>
           </thead>
+
           <tbody>
-            <!-- Ejemplo de fila, las demás se generan dinámicamente desde el backend -->
-            <tr>
-              <td>1</td>
-              <td>Plataforma Synergy</td>
-              <td>Sistema para gestión de proyectos académicos</td>
-              <td>2025-11-09</td>
-              <td><button class="btn-participar">Participar</button></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Control de Asistencias</td>
-              <td>Aplicación para registro de asistencia estudiantil</td>
-              <td>2025-11-08</td>
-              <td><button class="btn-participar">Participar</button></td>
+            <tr th:each="p : ${proyectos}">
+              <td th:text="${p.id}"></td>
+              <td th:text="${p.nombre}"></td>
+              <td th:text="${p.descripcion}"></td>
+
+              <!-- Formato de fecha -->
+              <td th:text="${#temporals.format(p.fechaInicio, 'dd/MM/yyyy')}"></td>
+
+<td>
+    <div class="acciones">
+        <form th:action="@{'/proyectos/participacion/inscribir/' + ${p.id} + '/' + ${usuario.id}}" method="post">
+            <button type="submit" class="btn-participar">Participar</button>
+        </form>
+
+        <form th:action="@{'/proyectos/participacion/eliminar/' + ${p.id} + '/' + ${usuario.id}}" method="post">
+            <button type="submit" class="btn-salir">Salir del proyecto</button>
+        </form>
+    </div>
+</td>
+
             </tr>
           </tbody>
+
         </table>
       </div>
     </div>

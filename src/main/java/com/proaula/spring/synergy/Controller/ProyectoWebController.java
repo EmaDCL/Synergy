@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.proaula.spring.synergy.Model.Proyecto;
+import com.proaula.spring.synergy.Model.Usuarios;
 import com.proaula.spring.synergy.Service.ProyectoService;
+import com.proaula.spring.synergy.Service.ParticipacionService;
 
 @Controller
 @RequestMapping("/proyectos")
@@ -17,7 +19,12 @@ public class ProyectoWebController {
     @Autowired
     private ProyectoService proyectoService;
 
-    // Mostrar formulario
+    @Autowired
+    private ParticipacionService participacionService;
+
+    // ==============================
+    //     REGISTRO DE PROYECTOS
+    // ==============================
     @GetMapping("/registro")
     public String mostrarRegistro(Model model) {
         model.addAttribute("proyecto", new Proyecto());
@@ -25,7 +32,6 @@ public class ProyectoWebController {
         return "registro_proyectos";
     }
 
-    // Guardar proyecto
     @PostMapping("/guardar")
     public String guardarProyecto(
             @ModelAttribute Proyecto proyecto,
@@ -39,7 +45,6 @@ public class ProyectoWebController {
             return "redirect:/login";
         }
 
-        // Asignar líder
         proyecto.setIdLider(usuarioId);
 
         proyectoService.guardar(proyecto, archivo);
@@ -51,9 +56,64 @@ public class ProyectoWebController {
         return "registro_proyectos";
     }
 
-    @GetMapping("/mis-proyectos")
-    public String listarProyectos(Model model) {
+    // ==============================
+    //      LISTA DE PROYECTOS
+    // ==============================
+    @GetMapping("/lista")
+    public String listarProyectos(HttpSession session, Model model) {
+
+        Usuarios usuario = (Usuarios) session.getAttribute("usuario");
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("usuario", usuario);
         model.addAttribute("proyectos", proyectoService.listar());
+
         return "Lista_Proyectos";
     }
+
+    // ==============================
+    //   VISTA PARA PARTICIPAR / SALIR
+    // ==============================
+    @GetMapping("/participar")
+    public String mostrarListaParticipacion(HttpSession session, Model model) {
+
+        Usuarios usuario = (Usuarios) session.getAttribute("usuario");
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("proyectos", proyectoService.listar());
+
+        return "Lista_Proyectos";
+    }
+
+    // ==============================
+    //      INSCRIBIRSE AL PROYECTO
+    // ==============================
+    @PostMapping("/participacion/inscribir/{proyectoId}/{usuarioId}")
+    public String inscribir(@PathVariable Long proyectoId,
+                            @PathVariable Long usuarioId) {
+
+        participacionService.inscribirUsuario(proyectoId, usuarioId);
+
+        return "redirect:/proyectos/lista";
+    }
+
+    // ==============================
+    //       SALIR DEL PROYECTO
+    // ==============================
+    @PostMapping("/participacion/eliminar/{proyectoId}/{usuarioId}")
+    public String salirDelProyecto(@PathVariable Long proyectoId,
+                                   @PathVariable Long usuarioId) {
+
+        participacionService.eliminarParticipacion(proyectoId, usuarioId);
+
+        return "redirect:/proyectos/lista";
+    }
+
 }
