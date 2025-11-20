@@ -33,23 +33,16 @@
         <!-- MENÚ PRINCIPAL DE OPCIONES -->
         <div class="menu-options">
         
-          <a th:href="@{/proyectos/registro}" class="menu-btn">Registrar Proyecto</a>
-
-
-<a th:href="@{/proyectos/participar}" class="menu-btn">
-  🤝 Participar en proyecto
+<a th:href="@{/proyectos/dashboard}" class="menu-btn">
+    📁 Proyectos
 </a>
 
-
-          <a th:href="@{/proyectos/registro}" class="menu-btn">
-            ➕ Crear un proyecto
+          <!-- BUZÓN DE TAREAS -->
+          <a th:href="@{/tareas/buzon}" class="menu-btn">
+            📬 Buzón de tareas
           </a>
 
-<a th:href="@{/lider/Asignar_Tareas}" class="menu-btn">
-  🚪 Asignar una tarea de proyecto
-</a>
-
-
+          <!-- CAMBIAR CREDENCIALES -->
           <a th:href="@{/usuario/credenciales}" class="menu-btn">
             🔐 Cambiar mis credenciales
           </a>

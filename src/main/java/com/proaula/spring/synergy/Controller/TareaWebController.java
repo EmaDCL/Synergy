@@ -2,26 +2,19 @@ package com.proaula.spring.synergy.Controller;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import com.proaula.spring.synergy.Model.Participacion;
 import com.proaula.spring.synergy.Model.Proyecto;
 import com.proaula.spring.synergy.Model.Tarea;
 import com.proaula.spring.synergy.Model.Usuarios;
-import com.proaula.spring.synergy.Service.ParticipacionService;
 import com.proaula.spring.synergy.Service.ProyectoService;
 import com.proaula.spring.synergy.Service.TareaService;
-
-import jakarta.servlet.http.HttpSession;
+import com.proaula.spring.synergy.Service.UsuarioService;
+import com.proaula.spring.synergy.Service.ParticipacionService;
 
 @Controller
 @RequestMapping("/tareas")
@@ -31,140 +24,75 @@ public class TareaWebController {
     private TareaService tareaService;
 
     @Autowired
-    private ParticipacionService participacionService;
-
-    @Autowired
     private ProyectoService proyectoService;
 
+    @Autowired
+    private UsuarioService usuarioService;
 
-    // ========== GET: página para asignar tareas ==========
-    @GetMapping("/asignar")
-    public String mostrarFormularioAsignar(@RequestParam Long proyectoId,
-                                           HttpSession session,
-                                           Model model) {
+    @Autowired
+    private ParticipacionService participacionService;
 
-        Usuarios usuarioSession = (Usuarios) session.getAttribute("usuario");
-        if (usuarioSession == null) return "redirect:/login";
+    // Página para crear tareas del líder
+    @GetMapping("/asignar/{idProyecto}")
+    public String asignarTarea(@PathVariable Long idProyecto, Model model) {
 
-        Proyecto proyecto = proyectoService.buscarPorId(proyectoId);
-        if (proyecto == null) return "redirect:/proyectos/lista";
+        Proyecto proyecto = proyectoService.buscarPorId(idProyecto);
 
-        // validar que sea el líder
-        if (proyecto.getIdLider() == null || !proyecto.getIdLider().equals(usuarioSession.getId())) {
-            return "error/403";
-        }
+        List<Usuarios> usuarios = participacionService.listarUsuariosPorProyecto(idProyecto);
 
-        List<Participacion> participaciones = participacionService.listarParticipantes(proyectoId);
+        List<Tarea> tareas = tareaService.obtenerTareasPorProyecto(idProyecto);
 
         model.addAttribute("proyecto", proyecto);
-        model.addAttribute(
-                "usuariosParticipantes",
-                participaciones.stream().map(Participacion::getUsuario).toList()
-        );
-
-        model.addAttribute("tareas", tareaService.listarPorProyecto(proyectoId));
-
-        return "Lider_AsignarTareas";  // ← vista correcta
-    }
-
-
-
-    // ========== POST: crear tarea ==========
-    @PostMapping("/asignar/{proyectoId}")
-    public String asignarTarea(@PathVariable Long proyectoId,
-                               @RequestParam(required = false, name = "usuariosAsignados") List<Long> usuarioIds,
-                               @RequestParam String nombre,
-                               @RequestParam String descripcion,
-                               @RequestParam String fechaLimite,
-                               HttpSession session,
-                               Model model) {
-
-        Usuarios usuarioSession = (Usuarios) session.getAttribute("usuario");
-        if (usuarioSession == null) return "redirect:/login";
-
-        Proyecto proyecto = proyectoService.buscarPorId(proyectoId);
-        if (proyecto == null) return "redirect:/proyectos/lista";
-
-        // validar líder
-        if (proyecto.getIdLider() == null || !proyecto.getIdLider().equals(usuarioSession.getId())) {
-            return "error/403";
-        }
-
-        LocalDate fecha = LocalDate.parse(fechaLimite);
-
-        // VALIDACIÓN → si no seleccionó usuarios
-        if (usuarioIds == null || usuarioIds.isEmpty()) {
-
-            model.addAttribute("error", "Debe seleccionar al menos un usuario");
-
-            // recargar datos del GET original
-            model.addAttribute("proyecto", proyecto);
-            model.addAttribute(
-                    "usuariosParticipantes",
-                    participacionService.listarParticipantes(proyectoId)
-                            .stream()
-                            .map(Participacion::getUsuario)
-                            .collect(Collectors.toList())
-            );
-            model.addAttribute("tareas", tareaService.listarPorProyecto(proyectoId));
-
-            return "Lider_AsignarTareas";  // vista correcta
-        }
-
-        // crear tarea
-        tareaService.crearTareaConUsuarios(proyectoId, usuarioIds, nombre, descripcion, fecha);
-
-        return "redirect:/tareas/asignar?proyectoId=" + proyectoId;
-    }
-
-
-
-    // ========== LISTAR tareas por proyecto ==========
-    @GetMapping("/proyecto/{proyectoId}")
-    public String listarPorProyecto(@PathVariable Long proyectoId, HttpSession session, Model model) {
-        Usuarios usuario = (Usuarios) session.getAttribute("usuario");
-        if (usuario == null) return "redirect:/login";
-
-        Proyecto proyecto = proyectoService.buscarPorId(proyectoId);
-        if (proyecto == null) return "redirect:/proyectos/lista";
-
-        model.addAttribute("proyecto", proyecto);
-        model.addAttribute("tareas", tareaService.listarPorProyecto(proyectoId));
-        return "tareas_proyecto";
-    }
-
-
-
-    // ========== LISTAR tareas del usuario ==========
-    @GetMapping("/mis-tareas")
-    public String listarMisTareas(HttpSession session, Model model) {
-        Usuarios usuario = (Usuarios) session.getAttribute("usuario");
-        if (usuario == null) return "redirect:/login";
-
-        List<Tarea> tareas = tareaService.listarPorUsuario(usuario.getId());
+        model.addAttribute("usuarios", usuarios);
+        model.addAttribute("tarea", new Tarea());
         model.addAttribute("tareas", tareas);
-        model.addAttribute("usuario", usuario);
-        return "tareas_usuario";
+
+        return "Lider_Asignar_Tareas";
     }
 
+    // Guardar tarea
+    @PostMapping("/guardar")
+    public String guardarTarea(
+            @ModelAttribute Tarea tarea,
+            @RequestParam Long proyectoId,
+            @RequestParam("usuariosSeleccionados") List<Long> usuariosIds,
+            @RequestParam("fechaEntrega") String fechaEntregaStr) {
 
+        Proyecto proyecto = proyectoService.buscarPorId(proyectoId);
 
-    // ========== ELIMINAR tarea ==========
-    @PostMapping("/eliminar/{id}")
-    public String eliminarTarea(@PathVariable Long id, HttpSession session) {
-        Usuarios usuario = (Usuarios) session.getAttribute("usuario");
-        if (usuario == null) return "redirect:/login";
+        tarea.setProyecto(proyecto);
+        tarea.setFechaEntrega(LocalDate.parse(fechaEntregaStr));
 
-        Tarea tarea = tareaService.buscarPorId(id);
-        if (tarea == null) return "redirect:/proyectos/lista";
+        // Estado por defecto
+        tarea.setEstado("Pendiente");
 
-        Long proyectoId = tarea.getProyecto() != null ? tarea.getProyecto().getId() : null;
+        tareaService.guardarTarea(tarea, usuariosIds);
 
-        tareaService.eliminar(id);
+        return "redirect:/tareas/asignar/" + proyectoId;
+    }
 
-        if (proyectoId != null)
-            return "redirect:/tareas/asignar?proyectoId=" + proyectoId;
+    // Buzón del usuario
+    @GetMapping("/buzon/{idUsuario}")
+    public String buzon(@PathVariable Long idUsuario, Model model) {
 
-        return "redirect:/tareas/mis-tareas";
+        List<Tarea> tareas = tareaService.obtenerTareasPorUsuario(idUsuario);
+        Usuarios usuario = usuarioService.buscarPorId(idUsuario).orElse(null);
+
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("tareas", tareas);
+
+        return "Usuarios_Buzon_Tareas";
+    }
+
+    // Cambiar estado
+    @PostMapping("/estado/{idTarea}")
+    public String actualizarEstado(
+            @PathVariable Long idTarea,
+            @RequestParam String estado,
+            @RequestParam Long idUsuario) {
+
+        tareaService.cambiarEstado(idTarea, estado);
+
+        return "redirect:/tareas/buzon/" + idUsuario;
     }
 }

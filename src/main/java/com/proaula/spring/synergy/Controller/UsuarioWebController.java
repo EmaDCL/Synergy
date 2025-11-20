@@ -28,7 +28,7 @@ public class UsuarioWebController {
 @GetMapping("/registrarse")
 public String mostrarRegistro(Model model) {
     model.addAttribute("usuario", new Usuarios());
-    return "registro";
+    return "Registro";
 }
 
 
@@ -46,7 +46,7 @@ public String mostrarRegistro(Model model) {
     @GetMapping("/login")
     public String mostrarLogin(Model model) {
         model.addAttribute("loginDTO", new Object());
-        return "login";
+        return "Login";
     }
 
     @PostMapping("/login")
@@ -60,7 +60,7 @@ public String mostrarRegistro(Model model) {
 
         if (usuario == null || !usuario.getContrasena().equals(contrasena)) {
             model.addAttribute("error", "Correo o contraseña incorrectos");
-            return "login";
+            return "Login";
         }
 
         session.setAttribute("usuario", usuario);

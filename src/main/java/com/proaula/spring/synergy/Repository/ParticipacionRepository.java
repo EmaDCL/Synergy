@@ -16,4 +16,6 @@ public interface ParticipacionRepository extends JpaRepository<Participacion, Pa
 
     // Buscar participación específica
     Optional<Participacion> findByProyecto_IdAndUsuario_Id(Long proyectoId, Long usuarioId);
+
+        List<Participacion> findByUsuario_Id(Long usuarioId);
 }

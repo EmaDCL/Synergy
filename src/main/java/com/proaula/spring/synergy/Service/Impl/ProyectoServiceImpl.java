@@ -65,4 +65,10 @@ public class ProyectoServiceImpl implements ProyectoService {
     public void eliminar(Long id) {
         proyectoRepository.deleteById(id);
     }
+
+    @Override
+public List<Proyecto> obtenerProyectosDeLider(Long idLider) {
+    return proyectoRepository.findByIdLider(idLider);
+}
+
 }
