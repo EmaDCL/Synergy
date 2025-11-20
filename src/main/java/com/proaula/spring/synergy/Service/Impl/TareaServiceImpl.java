@@ -1,18 +1,14 @@
 package com.proaula.spring.synergy.Service.Impl;
 
-import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.proaula.spring.synergy.Model.Proyecto;
 import com.proaula.spring.synergy.Model.Tarea;
 import com.proaula.spring.synergy.Model.Usuarios;
-import com.proaula.spring.synergy.Repository.ProyectoRepository;
 import com.proaula.spring.synergy.Repository.TareaRepository;
 import com.proaula.spring.synergy.Repository.UsuarioRepository;
 import com.proaula.spring.synergy.Service.TareaService;
@@ -24,62 +20,49 @@ public class TareaServiceImpl implements TareaService {
     private TareaRepository tareaRepository;
 
     @Autowired
-    private ProyectoRepository proyectoRepository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuariosRepo;
 
     @Override
-    public Tarea guardar(Tarea tarea) {
-        return tareaRepository.save(tarea);
-    }
+    public Tarea guardarTarea(Tarea tarea, List<Long> usuariosIds) {
 
-    @Override
-    @Transactional
-    public Tarea crearTareaConUsuarios(Long proyectoId, List<Long> usuarioIds, String titulo, String descripcion, LocalDate fechaEntrega) {
+        // Si marcaron usuarios:
+        if (usuariosIds != null && !usuariosIds.isEmpty()) {
 
-        Proyecto proyecto = proyectoRepository.findById(proyectoId)
-                .orElseThrow(() -> new RuntimeException("Proyecto no existe"));
+            Set<Usuarios> usuariosAsignados = usuariosIds.stream()
+                    .map(id -> usuariosRepo.findById(id)
+                            .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + id)))
+                    .collect(Collectors.toSet());
 
-        // obtener usuarios válidos
-        List<Usuarios> usuarios = usuarioRepository.findAllById(usuarioIds);
-
-        if (usuarios.isEmpty()) {
-            throw new RuntimeException("No hay usuarios válidos para asignar la tarea");
+            tarea.setUsuarios(usuariosAsignados);
+        } else {
+            tarea.setUsuarios(Set.of()); // ninguna asignación
         }
 
-        // crear tarea
-        Tarea tarea = new Tarea();
-        tarea.setTitulo(titulo);
-        tarea.setDescripcion(descripcion);
-        tarea.setEstado("Pendiente");
-        tarea.setFechaEntrega(fechaEntrega);
-        tarea.setProyecto(proyecto);
-
-        // asignar usuarios (Set)
-        Set<Usuarios> usuariosSet = new HashSet<>(usuarios);
-        tarea.setUsuarios(usuariosSet);
-
         return tareaRepository.save(tarea);
     }
 
     @Override
-    public List<Tarea> listarPorProyecto(Long proyectoId) {
-        return tareaRepository.findByProyecto_Id(proyectoId);
-    }
-
-    @Override
-    public List<Tarea> listarPorUsuario(Long usuarioId) {
+    public List<Tarea> obtenerTareasPorUsuario(Long usuarioId) {
         return tareaRepository.findByUsuarios_Id(usuarioId);
     }
 
     @Override
-    public Tarea buscarPorId(Long id) {
+    public List<Tarea> obtenerTareasPorProyecto(Long proyectoId) {
+        return tareaRepository.findByProyecto_Id(proyectoId);
+    }
+
+    @Override
+    public Tarea obtenerTareaPorId(Long id) {
         return tareaRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void eliminar(Long id) {
-        tareaRepository.deleteById(id);
+    public void cambiarEstado(Long tareaId, String nuevoEstado) {
+        Tarea tarea = tareaRepository.findById(tareaId).orElse(null);
+
+        if (tarea != null) {
+            tarea.setEstado(nuevoEstado);
+            tareaRepository.save(tarea);
+        }
     }
 }

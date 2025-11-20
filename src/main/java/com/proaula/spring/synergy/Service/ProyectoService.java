@@ -14,4 +14,7 @@ public interface ProyectoService {
     Proyecto buscarPorId(Long id);
 
     void eliminar(Long id);
+
+    List<Proyecto> obtenerProyectosDeLider(Long idLider);
+
 }

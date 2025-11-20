@@ -26,25 +26,26 @@ public class ParticipacionServiceImpl implements ParticipacionService {
     private UsuarioRepository usuarioRepository;
 
     @Override
-    public Participacion inscribirUsuario(Long proyectoId, Long usuarioId) {
+    public boolean inscribirUsuario(Long proyectoId, Long usuarioId) {
 
         Proyecto proyecto = proyectoRepository.findById(proyectoId)
-            .orElseThrow(() -> new RuntimeException("Proyecto no existe"));
+                .orElseThrow(() -> new RuntimeException("Proyecto no existe"));
 
         Usuarios usuario = usuarioRepository.findById(usuarioId)
-            .orElseThrow(() -> new RuntimeException("Usuario no existe"));
+                .orElseThrow(() -> new RuntimeException("Usuario no existe"));
 
         ParticipacionId id = new ParticipacionId(usuarioId, proyectoId);
 
         // evitar duplicados
         if (participacionRepository.existsById(id)) {
-            return null;
+            return false; // YA ESTABA INSCRITO
         }
 
-        // crear participación correctamente usando usuario y proyecto
+        // crear participación
         Participacion participacion = new Participacion(usuario, proyecto);
+        participacionRepository.save(participacion);
 
-        return participacionRepository.save(participacion);
+        return true; // INSCRIPCIÓN EXITOSA
     }
 
     @Override
@@ -59,9 +60,26 @@ public class ParticipacionServiceImpl implements ParticipacionService {
 
     @Override
     public void eliminarParticipacion(Long proyectoId, Long usuarioId) {
-
         participacionRepository
-            .findByProyecto_IdAndUsuario_Id(proyectoId, usuarioId)
-            .ifPresent(participacionRepository::delete);
+                .findByProyecto_IdAndUsuario_Id(proyectoId, usuarioId)
+                .ifPresent(participacionRepository::delete);
     }
+
+    @Override
+    public List<Proyecto> listarProyectosPorUsuario(Long usuarioId) {
+        List<Participacion> participaciones = participacionRepository.findByUsuario_Id(usuarioId);
+
+        return participaciones.stream()
+                .map(Participacion::getProyecto)
+                .toList();
+    }
+
+    @Override
+public List<Usuarios> listarUsuariosPorProyecto(Long proyectoId) {
+    return participacionRepository.findByProyecto_Id(proyectoId)
+            .stream()
+            .map(Participacion::getUsuario)
+            .toList();
+}
+
 }

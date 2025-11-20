@@ -1,21 +1,17 @@
 package com.proaula.spring.synergy.Service;
 
-import com.proaula.spring.synergy.Model.Tarea;
 import java.util.List;
-import java.time.LocalDate;
+import com.proaula.spring.synergy.Model.Tarea;
 
 public interface TareaService {
 
-    Tarea guardar(Tarea tarea);
+    Tarea guardarTarea(Tarea tarea, List<Long> usuariosIds);
 
-    // crear una tarea asociada a un proyecto y a varios usuarios
-    Tarea crearTareaConUsuarios(Long proyectoId, List<Long> usuarioIds, String titulo, String descripcion, LocalDate fechaEntrega);
+    List<Tarea> obtenerTareasPorUsuario(Long usuarioId);
 
-    List<Tarea> listarPorProyecto(Long proyectoId);
+    List<Tarea> obtenerTareasPorProyecto(Long proyectoId);
 
-    List<Tarea> listarPorUsuario(Long usuarioId);
+    Tarea obtenerTareaPorId(Long id);
 
-    Tarea buscarPorId(Long id);
-
-    void eliminar(Long id);
+    void cambiarEstado(Long tareaId, String nuevoEstado);
 }

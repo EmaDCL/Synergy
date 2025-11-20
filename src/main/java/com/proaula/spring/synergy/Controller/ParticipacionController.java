@@ -3,15 +3,16 @@ package com.proaula.spring.synergy.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.proaula.spring.synergy.Service.ParticipacionService;
+import com.proaula.spring.synergy.Service.UsuarioService;
 import com.proaula.spring.synergy.Model.Participacion;
+import com.proaula.spring.synergy.Model.Proyecto;
+import com.proaula.spring.synergy.Model.Usuarios;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.GetMapping;
-
-
 
 @RequestMapping("/participacion")
 @CrossOrigin(origins = "*")
@@ -21,34 +22,46 @@ public class ParticipacionController {
     @Autowired
     private ParticipacionService participacionService;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
+    // =====================================================
+    //  VISTA GENERAL
+    // =====================================================
     @GetMapping("/Participacion_Proyecto")
     public String mostrarVista() {
         return "Participacion_Proyecto";
     }
-    
 
-    // INSCRIBIR usuario a un proyecto
-    @PostMapping("/inscribir/{proyectoId}/{usuarioId}")
-    public ResponseEntity<?> inscribir(
-            @PathVariable Long proyectoId,
-            @PathVariable Long usuarioId) {
+    // =====================================================
+    //  VER PROYECTOS DONDE PARTICIPA EL USUARIO (CORREGIDO)
+    // =====================================================
+    @GetMapping("/mis-proyectos/{usuarioId}")
+    public String mostrarProyectosUsuario(@PathVariable Long usuarioId, Model model) {
 
-        Participacion participacion = participacionService.inscribirUsuario(proyectoId, usuarioId);
+        // Obtener los proyectos donde participa
+        List<Proyecto> proyectos = participacionService.listarProyectosPorUsuario(usuarioId);
 
-        if (participacion == null) {
-            return ResponseEntity.badRequest().body("Usuario ya está inscrito en este proyecto");
-        }
+        // Obtener información completa del usuario
+        Usuarios usuario = usuarioService.buscarPorId(usuarioId).orElse(null);
 
-        return ResponseEntity.ok(participacion);
+        model.addAttribute("proyectosParticipando", proyectos);
+        model.addAttribute("usuario", usuario);
+
+        return "Participacion_Proyecto_Salir";
     }
 
-    // LISTAR participantes de un proyecto
+    // =====================================================
+    //  LISTAR PARTICIPANTES DE UN PROYECTO
+    // =====================================================
     @GetMapping("/listar/{proyectoId}")
     public ResponseEntity<List<Participacion>> listar(@PathVariable Long proyectoId) {
         return ResponseEntity.ok(participacionService.listarParticipantes(proyectoId));
     }
 
-    // VERIFICAR si un usuario ya está inscrito
+    // =====================================================
+    //  VERIFICAR SI UN USUARIO YA ESTÁ INSCRITO
+    // =====================================================
     @GetMapping("/inscrito/{proyectoId}/{usuarioId}")
     public ResponseEntity<Boolean> estaInscrito(
             @PathVariable Long proyectoId,
@@ -57,13 +70,16 @@ public class ParticipacionController {
         return ResponseEntity.ok(participacionService.yaInscrito(proyectoId, usuarioId));
     }
 
-    // ELIMINAR participación
+    // =====================================================
+    //  ELIMINAR PARTICIPACIÓN
+    // =====================================================
     @DeleteMapping("/eliminar/{proyectoId}/{usuarioId}")
     public ResponseEntity<?> eliminar(
             @PathVariable Long proyectoId,
             @PathVariable Long usuarioId) {
 
-        participacionService.eliminarParticipacion(usuarioId, proyectoId);
+        participacionService.eliminarParticipacion(proyectoId, usuarioId);
+
         return ResponseEntity.ok("Participación eliminada");
     }
 }
