@@ -1,14 +1,18 @@
 package com.proaula.spring.synergy.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.proaula.spring.synergy.Model.Usuarios;
 import com.proaula.spring.synergy.Model.Usuarios.Rol;
 import com.proaula.spring.synergy.Service.UsuarioService;
 
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UsuarioWebController {
@@ -31,7 +35,6 @@ public String mostrarRegistro(Model model) {
     return "registro";
 }
 
-
     @PostMapping("/registrarse")
     public String registrar(@ModelAttribute("usuario") Usuarios usuario) {
 
@@ -48,8 +51,6 @@ public String mostrarRegistro(Model model) {
         model.addAttribute("loginDTO", new Object());
         return "login";
     }
-
-    @PostMapping("/login")
     public String procesarLogin(
             @RequestParam String correo,
             @RequestParam String contrasena,
