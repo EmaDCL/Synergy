@@ -109,19 +109,12 @@ public class UsuarioWebController {
 
         Rol rol = usuario.getRol();
 
-        switch (rol) {
-            case Administrador:
-                return "redirect:/admin/proyectos";
-
-            case Lider:
-                return "redirect:/lider/dashboard";
-
-            case Participante:
-                return "redirect:/dashboard";
-
-            default:
-                return "redirect:/login?error";
-        }
+        return switch (rol) {
+            case Administrador -> "redirect:/admin/proyectos";
+            case Lider -> "redirect:/lider/dashboard";
+            case Participante -> "redirect:/dashboard";
+            default -> "redirect:/login?error";
+        };
     }
 
     // ============================================
