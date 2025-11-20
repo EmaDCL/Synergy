@@ -111,7 +111,7 @@ public class UsuarioWebController {
 
         switch (rol) {
             case Administrador:
-                return "redirect:/administrador_dashboard";
+                return "redirect:/admin/proyectos";
 
             case Lider:
                 return "redirect:/lider/dashboard";
@@ -151,15 +151,15 @@ public class UsuarioWebController {
     }
 
     @GetMapping("/administrador_dashboard")
-public String adminDashboard(HttpSession session, Model model) {
+    public String adminDashboard(HttpSession session, Model model) {
 
-    Usuarios usuario = (Usuarios) session.getAttribute("usuario");
-    if (usuario == null) return "redirect:/login";
+        Usuarios usuario = (Usuarios) session.getAttribute("usuario");
+        if (usuario == null)
+            return "redirect:/login";
 
-    model.addAttribute("usuario", usuario);
-    return "Administrador_Dashboard";  // nombre EXACTO del HTML
-}
-
+        model.addAttribute("usuario", usuario);
+        return "Administrador_Dashboard"; // nombre EXACTO del HTML
+    }
 
     // ============================================
     // BUZÓN DE TAREAS

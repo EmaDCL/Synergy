@@ -1,17 +1,17 @@
 package com.proaula.spring.synergy.Service.Impl;
 
-import com.proaula.spring.synergy.Model.Usuarios;
-import com.proaula.spring.synergy.Model.Proyecto;
-import com.proaula.spring.synergy.Repository.UsuarioRepository;
-import com.proaula.spring.synergy.Repository.ProyectoRepository;
-import com.proaula.spring.synergy.Service.ProyectoService;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import com.proaula.spring.synergy.Model.Proyecto;
+import com.proaula.spring.synergy.Model.Usuarios;
+import com.proaula.spring.synergy.Repository.ProyectoRepository;
+import com.proaula.spring.synergy.Repository.UsuarioRepository;
+import com.proaula.spring.synergy.Service.ProyectoService;
 
 @Service
 public class ProyectoServiceImpl implements ProyectoService {
@@ -67,8 +67,12 @@ public class ProyectoServiceImpl implements ProyectoService {
     }
 
     @Override
-public List<Proyecto> obtenerProyectosDeLider(Long idLider) {
-    return proyectoRepository.findByIdLider(idLider);
-}
+    public List<Proyecto> obtenerProyectosDeLider(Long idLider) {
+        return proyectoRepository.findByIdLider(idLider);
+    }
+
+    public List<Proyecto> listarProyectos() {
+        return proyectoRepository.findAll();
+    }
 
 }

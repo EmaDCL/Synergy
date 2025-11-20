@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.proaula.spring.synergy.Model.Proyecto;
@@ -33,28 +36,28 @@ public class AdminController {
     private Usuarios validarAdmin(HttpSession session) {
         Usuarios usuario = (Usuarios) session.getAttribute("usuario");
 
-        if (usuario == null) return null;
-        if (!Rol.Administrador.equals(usuario.getRol())) return null;
+        if (usuario == null)
+            return null;
+        if (!Rol.Administrador.equals(usuario.getRol()))
+            return null;
 
         return usuario;
     }
-
-
 
     // ---------------------------------------------------------
     // VER TODOS LOS USUARIOS
     // ---------------------------------------------------------
     @GetMapping("/usuarios")
-    public String verUsuarios(HttpSession session, Model model) {
+    public String verUsuarios(Model model, HttpSession session) {
 
-        Usuarios admin = validarAdmin(session);
-        if (admin == null) return "redirect:/login";
+        Usuarios usuario = (Usuarios) session.getAttribute("usuario");
+        if (usuario == null || usuario.getRol() != Rol.Administrador) {
+            return "redirect:/login";
+        }
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("usuarios", usuarioService.listarUsuarios());
 
-        List<Usuarios> usuarios = usuarioService.listarUsuarios();
-
-        model.addAttribute("usuario", admin);
-        model.addAttribute("usuarios", usuarios);
-
+        // Vista Thymeleaf: src/main/resources/templates/Admin_Usuarios_Dashboard.html
         return "Admin_Usuarios_Dashboard";
     }
 
@@ -65,15 +68,34 @@ public class AdminController {
     public String verProyecto(@PathVariable Long id, HttpSession session, Model model) {
 
         Usuarios admin = validarAdmin(session);
-        if (admin == null) return "redirect:/login";
+        if (admin == null)
+            return "redirect:/login";
 
         Proyecto proyecto = proyectoService.buscarPorId(id);
-        if (proyecto == null) return "redirect:/admin/dashboard";
+        if (proyecto == null)
+            return "redirect:/admin/proyectos";
 
         model.addAttribute("usuario", admin);
         model.addAttribute("proyecto", proyecto);
 
+        // Vista: Admin_Ver_Proyecto.html
         return "Admin_Ver_Proyecto";
+    }
+
+    @GetMapping("/proyectos")
+    public String verProyectos(HttpSession session, Model model) {
+
+        Usuarios admin = validarAdmin(session);
+        if (admin == null)
+            return "redirect:/login";
+
+        List<Proyecto> proyectos = proyectoService.listar();
+
+        model.addAttribute("usuario", admin);
+        model.addAttribute("proyectos", proyectos);
+
+        // Vista: Administrador_Dashboard.html
+        return "Administrador_Dashboard";
     }
 
     // ---------------------------------------------------------
@@ -81,20 +103,21 @@ public class AdminController {
     // ---------------------------------------------------------
     @PostMapping("/proyecto/{id}/aceptar")
     public String aceptarProyecto(@PathVariable Long id,
-                                  HttpSession session,
-                                  RedirectAttributes redirectAttributes) {
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
 
         Usuarios admin = validarAdmin(session);
-        if (admin == null) return "redirect:/login";
+        if (admin == null)
+            return "redirect:/login";
 
         Proyecto proyecto = proyectoService.buscarPorId(id);
 
         if (proyecto != null) {
             redirectAttributes.addFlashAttribute("mensaje",
-                "✅ Proyecto '" + proyecto.getNombre() + "' aceptado correctamente");
+                    "✅ Proyecto '" + proyecto.getNombre() + "' aceptado correctamente");
         }
 
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/proyectos";
     }
 
     // ---------------------------------------------------------
@@ -102,11 +125,12 @@ public class AdminController {
     // ---------------------------------------------------------
     @PostMapping("/proyecto/{id}/eliminar")
     public String eliminarProyecto(@PathVariable Long id,
-                                   HttpSession session,
-                                   RedirectAttributes redirectAttributes) {
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
 
         Usuarios admin = validarAdmin(session);
-        if (admin == null) return "redirect:/login";
+        if (admin == null)
+            return "redirect:/login";
 
         Proyecto proyecto = proyectoService.buscarPorId(id);
 
@@ -114,10 +138,10 @@ public class AdminController {
             proyectoService.eliminar(id);
 
             redirectAttributes.addFlashAttribute("mensaje",
-                "🗑️ Proyecto '" + proyecto.getNombre() + "' eliminado correctamente");
+                    "🗑️ Proyecto '" + proyecto.getNombre() + "' eliminado correctamente");
         }
 
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/proyectos";
     }
 
     // ---------------------------------------------------------
@@ -125,16 +149,17 @@ public class AdminController {
     // ---------------------------------------------------------
     @PostMapping("/usuario/{id}/eliminar")
     public String eliminarUsuario(@PathVariable Long id,
-                                  HttpSession session,
-                                  RedirectAttributes redirectAttributes) {
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
 
         Usuarios admin = validarAdmin(session);
-        if (admin == null) return "redirect:/login";
+        if (admin == null)
+            return "redirect:/login";
 
         // Evitar que el admin se elimine a sí mismo
         if (admin.getId().equals(id)) {
             redirectAttributes.addFlashAttribute("error",
-                "❌ No puedes eliminar tu propia cuenta de administrador");
+                    "❌ No puedes eliminar tu propia cuenta de administrador");
             return "redirect:/admin/usuarios";
         }
 
@@ -144,7 +169,7 @@ public class AdminController {
             usuarioService.eliminarUsuario(id);
 
             redirectAttributes.addFlashAttribute("mensaje",
-                "🗑️ Usuario '" + usuario.getNombre() + "' eliminado correctamente");
+                    "🗑️ Usuario '" + usuario.getNombre() + "' eliminado correctamente");
         }
 
         return "redirect:/admin/usuarios";
@@ -155,12 +180,13 @@ public class AdminController {
     // ---------------------------------------------------------
     @PostMapping("/usuario/{id}/cambiar-rol")
     public String cambiarRol(@PathVariable Long id,
-                             @RequestParam String nuevoRol,
-                             HttpSession session,
-                             RedirectAttributes redirectAttributes) {
+            @RequestParam String nuevoRol,
+            HttpSession session,
+            RedirectAttributes redirectAttributes) {
 
         Usuarios admin = validarAdmin(session);
-        if (admin == null) return "redirect:/login";
+        if (admin == null)
+            return "redirect:/login";
 
         Usuarios usuario = usuarioService.buscarPorId(id).orElse(null);
 
@@ -171,7 +197,7 @@ public class AdminController {
                 usuarioService.guardarUsuario(usuario);
 
                 redirectAttributes.addFlashAttribute("mensaje",
-                    "✅ Rol de '" + usuario.getNombre() + "' cambiado a " + rolNuevo);
+                        "✅ Rol de '" + usuario.getNombre() + "' cambiado a " + rolNuevo);
             } catch (IllegalArgumentException e) {
                 redirectAttributes.addFlashAttribute("error", "❌ Rol inválido");
             }
