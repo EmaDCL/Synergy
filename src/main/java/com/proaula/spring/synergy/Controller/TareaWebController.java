@@ -1,20 +1,27 @@
 package com.proaula.spring.synergy.Controller;
 
-import com.proaula.spring.synergy.Model.*;
-import com.proaula.spring.synergy.Service.TareaService;
-import com.proaula.spring.synergy.Service.ParticipacionService;
-import com.proaula.spring.synergy.Service.ProyectoService;
-import com.proaula.spring.synergy.Service.UsuarioService;
-
-import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.proaula.spring.synergy.Model.Participacion;
+import com.proaula.spring.synergy.Model.Proyecto;
+import com.proaula.spring.synergy.Model.Tarea;
+import com.proaula.spring.synergy.Model.Usuarios;
+import com.proaula.spring.synergy.Service.ParticipacionService;
+import com.proaula.spring.synergy.Service.ProyectoService;
+import com.proaula.spring.synergy.Service.TareaService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/tareas")
@@ -28,9 +35,6 @@ public class TareaWebController {
 
     @Autowired
     private ProyectoService proyectoService;
-
-    @Autowired
-    private UsuarioService usuarioService;
 
 
     // ========== GET: página para asignar tareas ==========

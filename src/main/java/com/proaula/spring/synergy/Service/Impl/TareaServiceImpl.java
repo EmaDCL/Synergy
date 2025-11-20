@@ -1,20 +1,21 @@
 package com.proaula.spring.synergy.Service.Impl;
 
-import com.proaula.spring.synergy.Model.Tarea;
-import com.proaula.spring.synergy.Model.Proyecto;
-import com.proaula.spring.synergy.Model.Usuarios;
-import com.proaula.spring.synergy.Repository.TareaRepository;
-import com.proaula.spring.synergy.Repository.ProyectoRepository;
-import com.proaula.spring.synergy.Repository.UsuarioRepository;
-import com.proaula.spring.synergy.Service.TareaService;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
+import com.proaula.spring.synergy.Model.Proyecto;
+import com.proaula.spring.synergy.Model.Tarea;
+import com.proaula.spring.synergy.Model.Usuarios;
+import com.proaula.spring.synergy.Repository.ProyectoRepository;
+import com.proaula.spring.synergy.Repository.TareaRepository;
+import com.proaula.spring.synergy.Repository.UsuarioRepository;
+import com.proaula.spring.synergy.Service.TareaService;
 
 @Service
 public class TareaServiceImpl implements TareaService {
