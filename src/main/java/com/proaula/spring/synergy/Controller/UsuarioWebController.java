@@ -1,14 +1,18 @@
 package com.proaula.spring.synergy.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.proaula.spring.synergy.Model.Usuarios;
 import com.proaula.spring.synergy.Model.Usuarios.Rol;
 import com.proaula.spring.synergy.Service.UsuarioService;
 
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UsuarioWebController {
@@ -25,12 +29,12 @@ public class UsuarioWebController {
     public String index() {
         return "index";
     }
-@GetMapping("/registrarse")
-public String mostrarRegistro(Model model) {
-    model.addAttribute("usuario", new Usuarios());
-    return "Registro";
-}
 
+    @GetMapping("/registrarse")
+    public String mostrarRegistro(Model model) {
+        model.addAttribute("usuario", new Usuarios());
+        return "Registro";
+    }
 
     @PostMapping("/registrarse")
     public String registrar(@ModelAttribute("usuario") Usuarios usuario) {
@@ -66,7 +70,11 @@ public String mostrarRegistro(Model model) {
         session.setAttribute("usuario", usuario);
         session.setAttribute("usuarioId", usuario.getId());
 
-        return "redirect:/dashboard";
+        return switch (usuario.getRol()) {
+            case Administrador -> "redirect:/admin/dashboard";
+            case Lider -> "redirect:/lider/dashboard";
+            default -> "redirect:/dashboard";
+        }; 
     }
 
     @GetMapping("/dashboard")
@@ -84,8 +92,7 @@ public String mostrarRegistro(Model model) {
     }
 
     @GetMapping("/lider/asignar-tareas")
-public String mostrarAsignacionTareas() {
-    return "Lider_AsignarTareas";
-}
-
+    public String mostrarAsignacionTareas() {
+        return "Lider_AsignarTareas";
+    }
 }
