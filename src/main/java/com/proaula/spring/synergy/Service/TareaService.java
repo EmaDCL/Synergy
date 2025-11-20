@@ -1,35 +1,21 @@
 package com.proaula.spring.synergy.Service;
 
 import com.proaula.spring.synergy.Model.Tarea;
-import com.proaula.spring.synergy.Repository.TareaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
 
-@Service
-public class TareaService {
+public interface TareaService {
 
-    @Autowired
-    private TareaRepository tareaRepository;
+    Tarea guardar(Tarea tarea);
 
-    public List<Tarea> listarTareas() {
-        return tareaRepository.findAll();
-    }
+    // crear una tarea asociada a un proyecto y a varios usuarios
+    Tarea crearTareaConUsuarios(Long proyectoId, List<Long> usuarioIds, String titulo, String descripcion, LocalDate fechaEntrega);
 
-    public Tarea guardarTarea(Tarea tarea) {
-        return tareaRepository.save(tarea);
-    }
+    List<Tarea> listarPorProyecto(Long proyectoId);
 
-    public Optional<Tarea> buscarPorId(Long id) {
-        return tareaRepository.findById(id);
-    }
+    List<Tarea> listarPorUsuario(Long usuarioId);
 
-    public void eliminarTarea(Long id) {
-        tareaRepository.deleteById(id);
-    }
-    public List<Tarea> tareasPorProyecto(Long proyectoId) {
-    return tareaRepository.findByProyecto_Id(proyectoId);
-}
+    Tarea buscarPorId(Long id);
+
+    void eliminar(Long id);
 }

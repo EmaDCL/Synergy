@@ -1,18 +1,16 @@
 package com.proaula.spring.synergy.Repository;
 
+import com.proaula.spring.synergy.Model.Tarea;
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import com.proaula.spring.synergy.Model.Tarea;
 
 @Repository
 public interface TareaRepository extends JpaRepository<Tarea, Long> {
 
-    // Buscar tareas por estado (opcional)
-    Tarea findByEstado(String estado);
-    
+    // Listar tareas de un proyecto
     List<Tarea> findByProyecto_Id(Long proyectoId);
 
+    // Listar tareas donde participa un usuario (ManyToMany)
+    List<Tarea> findByUsuarios_Id(Long usuarioId);
 }

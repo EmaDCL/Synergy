@@ -1,5 +1,9 @@
 /* ===== Estilo general ===== */
+<<<<<<< HEAD
 * {
+=======
+*{
+>>>>>>> daa65a6 (reconeccion de repo pq salio se desconecto (solucion de css en el registrar proyecto))
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -14,7 +18,7 @@ html, body {
 
 /* ===== Fondo con Glass ===== */
 body {
-  background-image: url("../images/fondo_registro.jpg");
+  background-image: url("/img/Background_Registro.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

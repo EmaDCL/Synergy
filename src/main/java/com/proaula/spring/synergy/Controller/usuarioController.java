@@ -41,4 +41,6 @@ public class usuarioController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    
 }

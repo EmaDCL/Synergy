@@ -1,6 +1,8 @@
 package com.proaula.spring.synergy.Model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,32 +13,44 @@ public class Tarea {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Nombre / título de la tarea (coincide con el formulario: name="titulo")
     private String titulo;
-    private String descripcion;
-    private LocalDate fechaEntrega;
-    private String estado; // Pendiente, En progreso, Completada
 
-    // --- Relación con PROYECTO ---
-    @ManyToOne
+    @Column(length = 2000)
+    private String descripcion;
+
+    // estado puede ser "Pendiente", "En Progreso", "Completada"
+    private String estado;
+
+    @Column(name = "fecha_entrega")
+    private LocalDate fechaEntrega;
+
+    // Relación con proyecto (muchas tareas pertenecen a 1 proyecto)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "proyecto_id")
     private Proyecto proyecto;
 
-    // --- Nuevo: Usuario asignado ---
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuarios usuarioAsignado;
+    // Relación muchos-a-muchos con usuarios: una tarea puede tener varios usuarios asignados
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "tarea_usuarios",
+        joinColumns = @JoinColumn(name = "tarea_id"),
+        inverseJoinColumns = @JoinColumn(name = "usuario_id")
+    )
+    private Set<Usuarios> usuarios = new HashSet<>();
 
     public Tarea() {}
 
-    public Tarea(String titulo, String descripcion, LocalDate fechaEntrega, String estado) {
+    public Tarea(String titulo, String descripcion, String estado, LocalDate fechaEntrega, Proyecto proyecto, Set<Usuarios> usuarios) {
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.fechaEntrega = fechaEntrega;
         this.estado = estado;
+        this.fechaEntrega = fechaEntrega;
+        this.proyecto = proyecto;
+        this.usuarios = usuarios;
     }
 
-    // GETTERS Y SETTERS
-
+    // getters / setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -46,15 +60,19 @@ public class Tarea {
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public LocalDate getFechaEntrega() { return fechaEntrega; }
-    public void setFechaEntrega(LocalDate fechaEntrega) { this.fechaEntrega = fechaEntrega; }
-
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
+
+    public LocalDate getFechaEntrega() { return fechaEntrega; }
+    public void setFechaEntrega(LocalDate fechaEntrega) { this.fechaEntrega = fechaEntrega; }
 
     public Proyecto getProyecto() { return proyecto; }
     public void setProyecto(Proyecto proyecto) { this.proyecto = proyecto; }
 
-    public Usuarios getUsuarioAsignado() { return usuarioAsignado; }
-    public void setUsuarioAsignado(Usuarios usuarioAsignado) { this.usuarioAsignado = usuarioAsignado; }
+    public Set<Usuarios> getUsuarios() { return usuarios; }
+    public void setUsuarios(Set<Usuarios> usuarios) { this.usuarios = usuarios; }
+
+    // helpers
+    public void addUsuario(Usuarios u) { this.usuarios.add(u); }
+    public void removeUsuario(Usuarios u) { this.usuarios.remove(u); }
 }
