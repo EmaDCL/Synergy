@@ -13,24 +13,23 @@ public class Tarea {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Nombre / título de la tarea (coincide con el formulario: name="titulo")
+    @Column(nullable = false)
     private String titulo;
 
     @Column(length = 2000)
     private String descripcion;
 
-    // estado puede ser "Pendiente", "En Progreso", "Completada"
     private String estado;
 
     @Column(name = "fecha_entrega")
     private LocalDate fechaEntrega;
 
-    // Relación con proyecto (muchas tareas pertenecen a 1 proyecto)
+    // Relación correcta con Proyecto (usa id_proyecto)
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "proyecto_id")
+    @JoinColumn(name = "id_proyecto", nullable = false)
     private Proyecto proyecto;
 
-    // Relación muchos-a-muchos con usuarios: una tarea puede tener varios usuarios asignados
+    // Relación muchos a muchos con usuarios
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "tarea_usuarios",
@@ -41,7 +40,8 @@ public class Tarea {
 
     public Tarea() {}
 
-    public Tarea(String titulo, String descripcion, String estado, LocalDate fechaEntrega, Proyecto proyecto, Set<Usuarios> usuarios) {
+    public Tarea(String titulo, String descripcion, String estado,
+                 LocalDate fechaEntrega, Proyecto proyecto, Set<Usuarios> usuarios) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.estado = estado;
@@ -50,7 +50,7 @@ public class Tarea {
         this.usuarios = usuarios;
     }
 
-    // getters / setters
+    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -72,7 +72,7 @@ public class Tarea {
     public Set<Usuarios> getUsuarios() { return usuarios; }
     public void setUsuarios(Set<Usuarios> usuarios) { this.usuarios = usuarios; }
 
-    // helpers
+    // Helpers
     public void addUsuario(Usuarios u) { this.usuarios.add(u); }
     public void removeUsuario(Usuarios u) { this.usuarios.remove(u); }
 }

@@ -18,6 +18,4 @@ public interface UsuarioService {
     void eliminarUsuario(Long id);
 
     List<Usuarios> listarLideres();
-
-
 }

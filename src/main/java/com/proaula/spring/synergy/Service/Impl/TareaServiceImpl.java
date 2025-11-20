@@ -2,6 +2,7 @@ package com.proaula.spring.synergy.Service.Impl;
 
 import java.util.List;
 import java.util.Set;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,6 @@ public class TareaServiceImpl implements TareaService {
     @Override
     public Tarea guardarTarea(Tarea tarea, List<Long> usuariosIds) {
 
-        // Si marcaron usuarios:
         if (usuariosIds != null && !usuariosIds.isEmpty()) {
 
             Set<Usuarios> usuariosAsignados = usuariosIds.stream()
@@ -34,8 +34,9 @@ public class TareaServiceImpl implements TareaService {
                     .collect(Collectors.toSet());
 
             tarea.setUsuarios(usuariosAsignados);
+
         } else {
-            tarea.setUsuarios(Set.of()); // ninguna asignación
+            tarea.setUsuarios(new HashSet<>()); // <-- CORREGIDO
         }
 
         return tareaRepository.save(tarea);
@@ -46,10 +47,10 @@ public class TareaServiceImpl implements TareaService {
         return tareaRepository.findByUsuarios_Id(usuarioId);
     }
 
-    @Override
-    public List<Tarea> obtenerTareasPorProyecto(Long proyectoId) {
-        return tareaRepository.findByProyecto_Id(proyectoId);
-    }
+@Override
+public List<Tarea> obtenerTareasPorProyecto(Long idProyecto) {
+    return tareaRepository.findByProyectoIdConUsuarios(idProyecto);
+}
 
     @Override
     public Tarea obtenerTareaPorId(Long id) {
@@ -65,4 +66,13 @@ public class TareaServiceImpl implements TareaService {
             tareaRepository.save(tarea);
         }
     }
+        @Override
+public void marcarComoCompletada(Long idTarea) {
+    Tarea tarea = tareaRepository.findById(idTarea)
+            .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
+
+    tarea.setEstado("Completada");
+    tareaRepository.save(tarea);
+}
+    
 }

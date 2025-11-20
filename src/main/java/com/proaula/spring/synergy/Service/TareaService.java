@@ -14,4 +14,7 @@ public interface TareaService {
     Tarea obtenerTareaPorId(Long id);
 
     void cambiarEstado(Long tareaId, String nuevoEstado);
+
+    void marcarComoCompletada(Long idTarea);
+
 }

@@ -1,5 +1,9 @@
 /* ===== Estilo general ===== */
+<<<<<<< HEAD
 * {
+=======
+*{
+>>>>>>> daa65a6 (reconeccion de repo pq salio se desconecto (solucion de css en el registrar proyecto))
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,209 +13,98 @@
 html, body {
   width: 100%;
   height: 100%;
-  color: white;
+  background: #eef1f5;
 }
 
-/* ===== Fondo principal con efecto ===== */
-.hero {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background-image: url("/IMG/Background_Registro.jpg");
+/* ===== Fondo con Glass ===== */
+body {
+  background-image: url("/img/Background_Registro.jpg");
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-attachment: fixed;
 }
 
-/* ===== Capa de difuminado y transparencia ===== */
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(5px);
-  z-index: 0;
-}
-
-/* ===== Contenedor central ===== */
-.container {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Capa transparente con blur */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-}
-
-/* ===== Tarjeta con efecto vidrio ===== */
-.card {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(15px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-  border-radius: 20px;
-  padding: 50px 45px;
-  width: 420px;
-  text-align: center;
-  animation: fadeIn 0.8s ease;
-}
-
-/* ===== Logo ===== */
-.Logo {
-  width: 180px;
-  margin-bottom: 15px;
-  filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));
-}
-
-/* ===== Títulos ===== */
-h1 {
-  font-size: 1.8rem;
-  margin-bottom: 8px;
-  font-weight: 600;
-}
-
-.subtitle {
-  font-size: 0.95rem;
-  color: #e6e6e6;
-  margin-bottom: 30px;
-}
-
-/* ===== Campos de entrada ===== */
-.input-group {
-  position: relative;
-  margin-bottom: 25px;
-}
-
-.input-group input,
-.input-group textarea {
-  width: 100%;
-  padding: 12px 10px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 8px;
-  outline: none;
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(3px);
-}
-
-.input-group input:focus,
-.input-group textarea:focus {
+  height: 100%;
   background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 0 8px rgba(144, 202, 249, 0.6);
+  backdrop-filter: blur(5px);
+  z-index: -1;
 }
 
-.input-group textarea {
+/* ===== CONTENEDOR DEL FORMULARIO ===== */
+form {
+  width: 420px;
+  margin: 80px auto;
+  padding: 40px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.60);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+/* ===== TÍTULO ===== */
+h1 {
+  text-align: center;
+  color: #202124;
+  margin-bottom: 20px;
+}
+
+/* ===== SELECT LÍDER ===== */
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+
+/* ===== Inputs y Textareas ===== */
+input[type="text"],
+input[type="date"],
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(6px);
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+textarea {
   resize: vertical;
   min-height: 80px;
-  padding-top: 20px;
-  font-family: inherit;
 }
 
-/* ===== Etiquetas flotantes ===== */
-.input-group label {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 0.9rem;
-  pointer-events: none;
-  transition: 0.2s ease all;
-  background: transparent;
-  padding: 0 4px;
-}
-
-.input-group input:focus + label,
-.input-group input:valid + label,
-.input-group textarea:focus + label,
-.input-group textarea:valid + label {
-  top: -8px;
-  left: 8px;
-  font-size: 0.75rem;
-  color: #90caf9;
-}
-
-/* ===== Botón elegante ===== */
+/* ===== Botón ===== */
 button {
   width: 100%;
-  background: linear-gradient(135deg, #1a73e8, #0059ff);
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  background: #1a73e8;
   color: white;
   font-size: 1rem;
   font-weight: 500;
-  border: none;
-  border-radius: 50px;
-  padding: 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 89, 255, 0.3);
+  transition: 0.3s ease;
 }
 
 button:hover {
-  background: linear-gradient(135deg, #0059ff, #0037b3);
-  transform: scale(1.03);
-  box-shadow: 0 0 15px rgba(0, 115, 255, 0.7);
+  background: #1669c1;
 }
 
-/* ===== Enlace inferior ===== */
-.login-text {
-  margin-top: 25px;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.9rem;
+/* ===== Archivo ===== */
+input[type="file"] {
+  margin-top: 10px;
 }
-
-.login-text a {
-  color: #90caf9;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.login-text a:hover {
-  color: white;
-  text-decoration: underline;
-}
-
-/* ===== Animación ===== */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ===== Adaptación móvil ===== */
-@media (max-width: 768px) {
-  .card {
-    width: 90%;
-    padding: 35px 25px;
-  }
-  .overlay {
-    background: rgba(0, 0, 0, 0.5);
-  }
-}
-
-
-.btn-small {
-  width: auto !important;
-  padding: 6px 10px;
-  font-size: 14px;
-  background: #ffffffcc;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  cursor: pointer;
-  backdrop-filter: blur(4px);
-  transition: 0.2s ease;
-  text-decoration: none;
-  color: black;
-}
-
-.btn-small:hover {
-  background: #ffffffee;
-  transform: scale(1.05);
-}
-

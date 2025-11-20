@@ -1,13 +1,8 @@
 package com.proaula.spring.synergy.Model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "usuarios")
@@ -36,6 +31,10 @@ public class Usuarios {
         Lider
     }
 
+    // Relación inversa ManyToMany (NO toca tu tabla, NO cambia nada)
+    @ManyToMany(mappedBy = "usuarios", fetch = FetchType.LAZY)
+    private Set<Tarea> tareas = new HashSet<>();
+
     public Usuarios() {}
 
     public Usuarios(String nombre, String correo, String contrasena, Rol rol) {
@@ -45,7 +44,7 @@ public class Usuarios {
         this.rol = rol;
     }
 
-    // Getters y setters
+    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -60,4 +59,7 @@ public class Usuarios {
 
     public Rol getRol() { return rol; }
     public void setRol(Rol rol) { this.rol = rol; }
+
+    public Set<Tarea> getTareas() { return tareas; }
+    public void setTareas(Set<Tarea> tareas) { this.tareas = tareas; }
 }

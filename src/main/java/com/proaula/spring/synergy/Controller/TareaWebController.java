@@ -32,15 +32,23 @@ public class TareaWebController {
     @Autowired
     private ParticipacionService participacionService;
 
-    // Página para crear tareas del líder
+
+    // ============================================
+    //              PÁGINA DEL LÍDER
+    // ============================================
     @GetMapping("/asignar/{idProyecto}")
     public String asignarTarea(@PathVariable Long idProyecto, Model model) {
 
         Proyecto proyecto = proyectoService.buscarPorId(idProyecto);
-
         List<Usuarios> usuarios = participacionService.listarUsuariosPorProyecto(idProyecto);
 
+        // Tareas ya existentes del proyecto
         List<Tarea> tareas = tareaService.obtenerTareasPorProyecto(idProyecto);
+
+        // Evitar LazyInitializationException al mostrar usuarios en Thymeleaf
+        for (Tarea t : tareas) {
+            t.getUsuarios().size();
+        }
 
         model.addAttribute("proyecto", proyecto);
         model.addAttribute("usuarios", usuarios);
@@ -50,32 +58,46 @@ public class TareaWebController {
         return "Lider_Asignar_Tareas";
     }
 
-    // Guardar tarea
+
+    // ============================================
+    //                 GUARDAR TAREA
+    // ============================================
     @PostMapping("/guardar")
     public String guardarTarea(
             @ModelAttribute Tarea tarea,
             @RequestParam Long proyectoId,
-            @RequestParam("usuariosSeleccionados") List<Long> usuariosIds,
+            @RequestParam(value = "usuariosSeleccionados", required = false) List<Long> usuariosIds,
             @RequestParam("fechaEntrega") String fechaEntregaStr) {
 
         Proyecto proyecto = proyectoService.buscarPorId(proyectoId);
-
         tarea.setProyecto(proyecto);
+
+        // Fecha de entrega
         tarea.setFechaEntrega(LocalDate.parse(fechaEntregaStr));
 
         // Estado por defecto
         tarea.setEstado("Pendiente");
 
+        // Guardado con usuarios asignados
         tareaService.guardarTarea(tarea, usuariosIds);
 
         return "redirect:/tareas/asignar/" + proyectoId;
     }
 
-    // Buzón del usuario
+
+    // ============================================
+    //                     BUZÓN
+    // ============================================
     @GetMapping("/buzon/{idUsuario}")
     public String buzon(@PathVariable Long idUsuario, Model model) {
 
         List<Tarea> tareas = tareaService.obtenerTareasPorUsuario(idUsuario);
+
+        // Necesario si en el buzón se muestran los usuarios asignados
+        for (Tarea t : tareas) {
+            t.getUsuarios().size();
+        }
+
         Usuarios usuario = usuarioService.buscarPorId(idUsuario).orElse(null);
 
         model.addAttribute("usuario", usuario);
@@ -84,7 +106,10 @@ public class TareaWebController {
         return "Usuarios_Buzon_Tareas";
     }
 
-    // Cambiar estado
+
+    // ============================================
+    //            CAMBIO DE ESTADO
+    // ============================================
     @PostMapping("/estado/{idTarea}")
     public String actualizarEstado(
             @PathVariable Long idTarea,
@@ -92,7 +117,8 @@ public class TareaWebController {
             @RequestParam Long idUsuario) {
 
         tareaService.cambiarEstado(idTarea, estado);
-
         return "redirect:/tareas/buzon/" + idUsuario;
     }
+
+    
 }
