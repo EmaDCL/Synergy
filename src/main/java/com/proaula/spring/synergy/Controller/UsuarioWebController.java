@@ -29,7 +29,7 @@ public class UsuarioWebController {
     private TareaService tareaService;
 
     // ============================================
-    //  PÁGINA PRINCIPAL
+    // PÁGINA PRINCIPAL
     // ============================================
     @GetMapping("/")
     public String mostrarIndex() {
@@ -42,7 +42,7 @@ public class UsuarioWebController {
     }
 
     // ============================================
-    //  REGISTRO
+    // REGISTRO
     // ============================================
     @GetMapping("/registrarse")
     public String mostrarRegistro(Model model) {
@@ -51,28 +51,37 @@ public class UsuarioWebController {
     }
 
     @PostMapping("/registrarse")
-    public String registrar(@ModelAttribute("usuario") Usuarios usuario,
-                           RedirectAttributes redirectAttributes) {
-        
-        // Validar que el correo no exista
-        if (usuarioService.buscarPorCorreo(usuario.getCorreo()).isPresent()) {
-            redirectAttributes.addFlashAttribute("error", "El correo ya está registrado");
-            return "redirect:/registrarse";
-        }
+    public String registrar(
+            @ModelAttribute Usuarios usuario,
+            RedirectAttributes ra) {
 
-        // Asignar rol por defecto
-        if (usuario.getRol() == null) {
-            usuario.setRol(Rol.Participante);
-        }
+        // Asignar rol automáticamente por el correo
+        asignarRolPorCorreo(usuario);
 
+        // Guardar en BD
         usuarioService.guardarUsuario(usuario);
-        redirectAttributes.addFlashAttribute("mensaje", "Registro exitoso. Ahora puedes iniciar sesión");
-        
+
+        ra.addFlashAttribute("mensaje", "Usuario registrado correctamente");
         return "redirect:/login";
     }
 
     // ============================================
-    //  LOGIN
+    // ASIGNAR ROL AUTOMÁTICO POR DOMINIO
+    // ============================================
+    private void asignarRolPorCorreo(Usuarios usuario) {
+        String correo = usuario.getCorreo();
+
+        if (correo.endsWith("@admin.com")) {
+            usuario.setRol(Rol.Administrador);
+        } else if (correo.endsWith("@lider.com")) {
+            usuario.setRol(Rol.Lider);
+        } else {
+            usuario.setRol(Rol.Participante);
+        }
+    }
+
+    // ============================================
+    // LOGIN
     // ============================================
     @GetMapping("/login")
     public String mostrarLogin(Model model) {
@@ -98,11 +107,25 @@ public class UsuarioWebController {
         session.setAttribute("usuario", usuario);
         session.setAttribute("usuarioId", usuario.getId());
 
-        return "redirect:/dashboard";
+        Rol rol = usuario.getRol();
+
+        switch (rol) {
+            case Administrador:
+                return "redirect:/administrador_dashboard";
+
+            case Lider:
+                return "redirect:/lider/dashboard";
+
+            case Participante:
+                return "redirect:/dashboard";
+
+            default:
+                return "redirect:/login?error";
+        }
     }
 
     // ============================================
-    //  LOGOUT
+    // LOGOUT
     // ============================================
     @GetMapping("/logout")
     public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
@@ -112,7 +135,7 @@ public class UsuarioWebController {
     }
 
     // ============================================
-    //  DASHBOARD PRINCIPAL
+    // DASHBOARD PRINCIPAL
     // ============================================
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
@@ -127,8 +150,19 @@ public class UsuarioWebController {
         return "dashboard_Usuario";
     }
 
+    @GetMapping("/administrador_dashboard")
+public String adminDashboard(HttpSession session, Model model) {
+
+    Usuarios usuario = (Usuarios) session.getAttribute("usuario");
+    if (usuario == null) return "redirect:/login";
+
+    model.addAttribute("usuario", usuario);
+    return "Administrador_Dashboard";  // nombre EXACTO del HTML
+}
+
+
     // ============================================
-    //  BUZÓN DE TAREAS
+    // BUZÓN DE TAREAS
     // ============================================
     @GetMapping("/tareas/buzon")
     public String mostrarBuzonTareas(HttpSession session, Model model) {
@@ -148,11 +182,11 @@ public class UsuarioWebController {
     }
 
     // ============================================
-    //  VER CREDENCIALES (PERFIL)
+    // VER CREDENCIALES (PERFIL)
     // ============================================
     @GetMapping("/usuario/credenciales")
     public String verCredenciales(HttpSession session, Model model) {
-        
+
         Usuarios usuario = (Usuarios) session.getAttribute("usuario");
 
         if (usuario == null) {
@@ -164,7 +198,7 @@ public class UsuarioWebController {
     }
 
     // ============================================
-    //  ACTUALIZAR CREDENCIALES
+    // ACTUALIZAR CREDENCIALES
     // ============================================
     @PostMapping("/usuario/actualizar-credenciales")
     public String actualizarCredenciales(
@@ -198,7 +232,7 @@ public class UsuarioWebController {
 
         // Cambiar contraseña si se solicita
         if (contrasenaNueva != null && !contrasenaNueva.isEmpty()) {
-            
+
             // Validar contraseña actual
             if (contrasenaActual == null || !usuario.getContrasena().equals(contrasenaActual)) {
                 redirectAttributes.addFlashAttribute("error", "Contraseña actual incorrecta");
@@ -223,7 +257,7 @@ public class UsuarioWebController {
 
         // Guardar cambios
         usuarioService.guardarUsuario(usuario);
-        
+
         // Actualizar sesión
         session.setAttribute("usuario", usuario);
 
@@ -232,11 +266,11 @@ public class UsuarioWebController {
     }
 
     // ============================================
-    //  ASIGNACIÓN DE TAREAS (LÍDER)
+    // ASIGNACIÓN DE TAREAS (LÍDER)
     // ============================================
     @GetMapping("/lider/asignar-tareas")
     public String mostrarAsignacionTareas(HttpSession session, Model model) {
-        
+
         Usuarios usuario = (Usuarios) session.getAttribute("usuario");
 
         if (usuario == null) {

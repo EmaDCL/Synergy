@@ -1,60 +1,119 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard – Usuarios</title>
-  <link rel="stylesheet" href="/css/Admin_Usuarios_Dashboard.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestión de Usuarios – Synergy Admin</title>
+  <link rel="stylesheet" th:href="@{/css/Administrador_Dashboard.css}" />
+  <style>
+    .role-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .role-admin { background: #ff6b6b; color: white; }
+    .role-lider { background: #4ecdc4; color: white; }
+    .role-participante { background: #95e1d3; color: #333; }
+  </style>
 </head>
 <body>
-  <section class="hero">
+
+  <div class="hero">
     <div class="overlay"></div>
 
     <div class="container">
       <div class="card">
+        <!-- Encabezado -->
         <div class="header">
           <div class="top-buttons">
-            <button class="btn-inicio" onclick="location.href='/Administrador_Dashboard'">
-              Volver al Panel Principal
-            </button>
+            <button class="btn-inicio" onclick="window.location.href='/admin/dashboard'">⬅ Volver al Dashboard</button>
+            <button class="btn-logout" onclick="location.href='/logout'">🚪 Cerrar Sesión</button>
           </div>
-
-          <h1>Synergy – Panel de Usuarios</h1>
-          <p class="subtitle">Aquí puedes gestionar los usuarios del sistema.</p>
+          <h1>👥 Gestión de Usuarios</h1>
+          <p class="subtitle">Administra los usuarios registrados en la plataforma</p>
+          
+          <!-- Mensajes -->
+          <div th:if="${mensaje}" class="alert alert-success" style="margin-top: 1rem; padding: 1rem; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; color: #155724;">
+            <span th:text="${mensaje}"></span>
+          </div>
+          <div th:if="${error}" class="alert alert-error" style="margin-top: 1rem; padding: 1rem; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; color: #721c24;">
+            <span th:text="${error}"></span>
+          </div>
         </div>
 
+        <!-- Tabla de usuarios -->
         <table class="project-table">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Nombre</th>
               <th>Correo</th>
-              <th>Rol</th>
+              <th>Rol Actual</th>
+              <th>Cambiar Rol</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Juan Pérez</td>
-              <td>juanperez@gmail.com</td>
-              <td>Usuario</td>
-              <td class="actions"><button class="btn-eliminar">Eliminar</button></td>
+            <!-- Si no hay usuarios -->
+            <tr th:if="${#lists.isEmpty(usuarios)}">
+              <td colspan="6" style="text-align: center; padding: 2rem; color: #666;">
+                No hay usuarios registrados
+              </td>
             </tr>
-            <tr>
-              <td>María López</td>
-              <td>marialopez@gmail.com</td>
-              <td>Usuario</td>
-              <td class="actions"><button class="btn-eliminar">Eliminar</button></td>
-            </tr>
-            <tr>
-              <td>Carlos Ruiz</td>
-              <td>carlosruiz@gmail.com</td>
-              <td>Administrador</td>
-              <td class="actions"><button class="btn-eliminar">Eliminar</button></td>
+
+            <!-- Usuarios dinámicos -->
+            <tr th:each="u : ${usuarios}">
+              <td th:text="${u.id}">1</td>
+              <td th:text="${u.nombre}">Usuario</td>
+              <td th:text="${u.correo}">correo@ejemplo.com</td>
+              <td>
+                <span class="role-badge" 
+                      th:classappend="${u.rol.name() == 'Administrador' ? 'role-admin' : (u.rol.name() == 'Lider' ? 'role-lider' : 'role-participante')}"
+                      th:text="${u.rol.name()}">
+                  Rol
+                </span>
+              </td>
+              <td>
+                <!-- Formulario para cambiar rol -->
+                <form th:action="@{/admin/usuario/{id}/cambiar-rol(id=${u.id})}" 
+                      method="post" 
+                      style="display: flex; gap: 0.5rem; align-items: center;">
+                  <select name="nuevoRol" style="padding: 0.4rem; border-radius: 4px; border: 1px solid #ddd;">
+                    <option value="Administrador" th:selected="${u.rol.name() == 'Administrador'}">Administrador</option>
+                    <option value="Lider" th:selected="${u.rol.name() == 'Lider'}">Líder</option>
+                    <option value="Participante" th:selected="${u.rol.name() == 'Participante'}">Participante</option>
+                  </select>
+                  <button type="submit" class="btn-aceptar" style="padding: 0.4rem 1rem;">Cambiar</button>
+                </form>
+              </td>
+              <td class="actions">
+                <!-- No mostrar eliminar si es el admin actual -->
+                <form th:if="${u.id != usuario.id}"
+                      th:action="@{/admin/usuario/{id}/eliminar(id=${u.id})}" 
+                      method="post" 
+                      style="display: inline;"
+                      th:onsubmit="'return confirm(\'¿Eliminar a ' + ${u.nombre} + '?\')'">
+                  <button type="submit" class="btn-eliminar">Eliminar</button>
+                </form>
+                <span th:if="${u.id == usuario.id}" style="color: #666; font-style: italic;">
+                  (Tú)
+                </span>
+              </td>
             </tr>
           </tbody>
         </table>
+
+        <!-- Estadísticas -->
+        <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 5px; color: #fff;">
+          <p style="margin: 0;">
+            <strong>Total de usuarios:</strong> <span th:text="${#lists.size(usuarios)}">0</span>
+          </p>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+
 </body>
 </html>
