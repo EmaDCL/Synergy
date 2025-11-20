@@ -194,3 +194,24 @@ button:hover {
     background: rgba(0, 0, 0, 0.5);
   }
 }
+
+
+.btn-small {
+  width: auto !important;
+  padding: 6px 10px;
+  font-size: 14px;
+  background: #ffffffcc;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: 0.2s ease;
+  text-decoration: none;
+  color: black;
+}
+
+.btn-small:hover {
+  background: #ffffffee;
+  transform: scale(1.05);
+}
+
