@@ -5,7 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "proyectos")
@@ -25,8 +36,9 @@ public class Proyecto {
     @Column(name = "fecha_fin")
     private LocalDate fechaFin;
 
-    @Column(name = "id_lider")
-    private Long idLider;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_lider")
+    private Usuarios lider;
 
     @JsonIgnore
     @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -34,20 +46,20 @@ public class Proyecto {
 
     public Proyecto() {}
 
-    public Proyecto(String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, Long idLider) {
+    public Proyecto(String nombre, String descripcion, LocalDate fechaInicio, LocalDate fechaFin, Usuarios lider) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.idLider = idLider;
+        this.lider = lider;
     }
 
-    public Long getIdLider() {
-        return idLider;
+    public Usuarios getLider() {
+        return lider;
     }
 
-    public void setIdLider(Long idLider) {
-        this.idLider = idLider;
+    public void setLider(Usuarios lider) {
+        this.lider = lider;
     }
 
     public Long getId() {
@@ -97,4 +109,5 @@ public class Proyecto {
     public void setComentarios(List<Comentario> comentarios) {
         this.comentarios = comentarios;
     }
+
 }

@@ -30,24 +30,28 @@ public class ProyectoServiceImpl implements ProyectoService {
     @Override
     public Proyecto guardar(Proyecto proyecto, MultipartFile archivo) {
         try {
+
+            // Validar archivo (si viene)
             if (archivo != null && !archivo.isEmpty()) {
                 System.out.println("Archivo recibido: " + archivo.getOriginalFilename());
             }
 
-            Long idLider = proyecto.getIdLider();
-
-            // 1. Validar que el usuario exista
-            Usuarios usuario = usuarioRepository.findById(idLider)
-                    .orElseThrow(() -> new RuntimeException("Usuario líder no existe"));
-
-            // 2. Si el usuario NO es Líder, cambiar su rol
-            if (!usuario.getRol().equals(Usuarios.Rol.Lider)) {
-                usuario.setRol(Usuarios.Rol.Lider);
-                usuarioRepository.save(usuario);
-                System.out.println("🔄 Usuario actualizado a rol LIDER");
+            // Validar líder
+            if (proyecto.getLider() == null) {
+                throw new RuntimeException("El proyecto debe tener un líder asignado");
             }
 
-            // 3. Guardar el proyecto
+            Usuarios lider = usuarioRepository.findById(proyecto.getId())
+                    .orElseThrow(() -> new RuntimeException("El líder asignado no existe"));
+
+            // Si deseas obligar que el usuario sea líder:
+            if (!Usuarios.Rol.Lider.equals(lider.getRol())) {
+                lider.setRol(Usuarios.Rol.Lider);
+                usuarioRepository.save(lider);
+                System.out.println("🔄 El usuario fue actualizado a rol LIDER");
+            }
+
+            // Guardar el proyecto
             return proyectoRepository.save(proyecto);
 
         } catch (DataAccessException e) {

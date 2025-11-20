@@ -70,7 +70,7 @@ public class ProyectoWebController {
             return "redirect:/login";
         }
 
-        proyecto.setIdLider(usuarioId);
+        proyecto.setLider(null);;
         proyectoService.guardar(proyecto, archivo);
 
         model.addAttribute("mensajeExito", "Proyecto registrado correctamente");

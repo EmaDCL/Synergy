@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Proyecto</title>
+</head>
+<body>
+
+<h2>Registrar nuevo proyecto</h2>
+
+<form th:action="@{/lider/proyecto/guardar}" th:object="${proyecto}" method="post">
+
+    <label>Nombre</label>
+    <input type="text" th:field="*{nombre}" required><br><br>
+
+    <label>Descripción</label>
+    <textarea th:field="*{descripcion}" required></textarea><br><br>
+
+    <label>Fecha inicio</label>
+    <input type="date" th:field="*{fechaInicio}" required><br><br>
+
+    <label>Fecha fin</label>
+    <input type="date" th:field="*{fechaFin}" required><br><br>
+
+    <button type="submit">Guardar</button>
+
+</form>
+
+</body>
+</html>
