@@ -28,7 +28,7 @@ public class UsuarioWebController {
 @GetMapping("/registrarse")
 public String mostrarRegistro(Model model) {
     model.addAttribute("usuario", new Usuarios());
-    return "registro";
+    return "Registro";
 }
 
 

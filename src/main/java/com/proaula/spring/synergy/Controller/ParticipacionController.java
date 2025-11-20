@@ -2,20 +2,31 @@ package com.proaula.spring.synergy.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.proaula.spring.synergy.Service.ParticipacionService;
 import com.proaula.spring.synergy.Model.Participacion;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@RestController
+
+
 @RequestMapping("/participacion")
 @CrossOrigin(origins = "*")
+@Controller
 public class ParticipacionController {
 
     @Autowired
     private ParticipacionService participacionService;
+
+    @GetMapping("/Participacion_Proyecto")
+    public String mostrarVista() {
+        return "Participacion_Proyecto";
+    }
+    
 
     // INSCRIBIR usuario a un proyecto
     @PostMapping("/inscribir/{proyectoId}/{usuarioId}")
