@@ -12,14 +12,9 @@
 
 <h1>Registrar Proyecto</h1>
 
-<div th:if="${mensajeExito}" class="alert alert-success">
+<div th:if="${mensajeExito}">
     <p th:text="${mensajeExito}"></p>
 </div>
-
-<div th:if="${error}" class="alert alert-danger">
-    <p th:text="${error}"></p>
-</div>
-
 
 <form th:action="@{/proyectos/guardar}" 
       th:object="${proyecto}" 

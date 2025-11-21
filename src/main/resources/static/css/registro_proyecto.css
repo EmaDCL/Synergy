@@ -1,92 +1,74 @@
-/* ===== Estilo general ===== */
-<<<<<<< HEAD
-* {
-=======
+/* ESTILO GENERAL */
 *{
->>>>>>> daa65a6 (reconeccion de repo pq salio se desconecto (solucion de css en el registrar proyecto))
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Roboto", Arial, sans-serif;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-  background: #eef1f5;
-}
-
-/* ===== Fondo con Glass ===== */
 body {
-  background-image: url("/img/Background_Registro.jpg");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background: url("/img/Background_Registro.jpg") center/cover fixed no-repeat;
+  position: relative;
 }
 
-/* Capa transparente con blur */
+/* CAPA GLASS GLOBAL */
 body::before {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(5px);
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
   z-index: -1;
 }
 
-/* ===== CONTENEDOR DEL FORMULARIO ===== */
-form {
-  width: 420px;
-  margin: 80px auto;
-  padding: 40px;
-  border-radius: 30px;
-  background: rgba(255, 255, 255, 0.60);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(10px);
-}
-
-/* ===== TÍTULO ===== */
+/* TÍTULO */
 h1 {
   text-align: center;
-  color: #202124;
+  margin-top: 30px;
   margin-bottom: 20px;
+  color: #202124;
 }
 
-/* ===== SELECT LÍDER ===== */
-select {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #bbb;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  background: rgba(255,255,255,0.8);
-  backdrop-filter: blur(6px);
-  cursor: pointer;
+/* FORMULARIO GLASS */
+form {
+  width: 420px;
+  margin: 20px auto;
+  padding: 35px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  backdrop-filter: blur(12px);
 }
 
-/* ===== Inputs y Textareas ===== */
+/* LABELS */
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #202124;
+}
+
+/* INPUTS Y TEXTAREA */
 input[type="text"],
 input[type="date"],
 textarea {
   width: 100%;
   padding: 12px;
-  border: 1px solid #bbb;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.85);
-  backdrop-filter: blur(6px);
-  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: rgba(255,255,255,0.5);
   margin-bottom: 15px;
+  backdrop-filter: blur(5px);
+  font-size: 1rem;
 }
 
-textarea {
-  resize: vertical;
-  min-height: 80px;
+/* ARCHIVO */
+input[type="file"] {
+  margin-bottom: 20px;
 }
 
-/* ===== Botón ===== */
+/* BOTÓN */
 button {
   width: 100%;
   padding: 12px;
@@ -95,16 +77,9 @@ button {
   background: #1a73e8;
   color: white;
   font-size: 1rem;
-  font-weight: 500;
   cursor: pointer;
-  transition: 0.3s ease;
 }
 
 button:hover {
   background: #1669c1;
-}
-
-/* ===== Archivo ===== */
-input[type="file"] {
-  margin-top: 10px;
 }

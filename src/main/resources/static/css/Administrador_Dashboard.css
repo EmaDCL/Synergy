@@ -16,7 +16,7 @@ html, body {
   position: relative;
   width: 100%;
   height: 100vh;
-  background-image: url('/synergy/src/main/resources/static/IMG/Background_Registro.jpg'); /* tu imagen */
+  background: url("/IMG/Background_Registro.jpg") center/cover fixed no-repeat;
   background-size: cover;
   background-position: center;
   display: flex;

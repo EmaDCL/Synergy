@@ -28,7 +28,7 @@ html, body {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('/synergy/src/main/resources/static/IMG/Background_Registro.jpg'); /* ← Cambia aquí tu imagen */
+  background: url("/IMG/Background_Registro.jpg") center/cover fixed no-repeat;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
