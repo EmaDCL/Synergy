@@ -28,37 +28,37 @@ public class ProyectoServiceImpl implements ProyectoService {
     }
 
     @Override
-    public Proyecto guardar(Proyecto proyecto, MultipartFile archivo) {
-        try {
-
-            // Validar archivo (si viene)
-            if (archivo != null && !archivo.isEmpty()) {
-                System.out.println("Archivo recibido: " + archivo.getOriginalFilename());
-            }
-
-            // Validar líder
-            if (proyecto.getLider() == null) {
-                throw new RuntimeException("El proyecto debe tener un líder asignado");
-            }
-
-            Usuarios lider = usuarioRepository.findById(proyecto.getId())
-                    .orElseThrow(() -> new RuntimeException("El líder asignado no existe"));
-
-            // Si deseas obligar que el usuario sea líder:
-            if (!Usuarios.Rol.Lider.equals(lider.getRol())) {
-                lider.setRol(Usuarios.Rol.Lider);
-                usuarioRepository.save(lider);
-                System.out.println("🔄 El usuario fue actualizado a rol LIDER");
-            }
-
-            // Guardar el proyecto
-            return proyectoRepository.save(proyecto);
-
-        } catch (DataAccessException e) {
-            System.out.println("❌ Error guardando proyecto: " + e.getMessage());
-            throw e;
+public Proyecto guardar(Proyecto proyecto, MultipartFile archivo) {
+    try {
+        // Validar archivo (si viene)
+        if (archivo != null && !archivo.isEmpty()) {
+            System.out.println("Archivo recibido: " + archivo.getOriginalFilename());
         }
+
+        // Validar líder
+        if (proyecto.getLider() == null) {
+            throw new RuntimeException("El proyecto debe tener un líder asignado");
+        }
+
+        // Buscar líder por su id (no por el id del proyecto)
+        Usuarios lider = usuarioRepository.findById(proyecto.getLider().getId())
+                .orElseThrow(() -> new RuntimeException("El líder asignado no existe"));
+
+        // Si deseas obligar que el usuario sea líder:
+        if (!Usuarios.Rol.Lider.equals(lider.getRol())) {
+            lider.setRol(Usuarios.Rol.Lider);
+            usuarioRepository.save(lider);
+            System.out.println("🔄 El usuario fue actualizado a rol LIDER");
+        }
+
+        // Guardar el proyecto
+        return proyectoRepository.save(proyecto);
+
+    } catch (DataAccessException e) {
+        System.out.println("❌ Error guardando proyecto: " + e.getMessage());
+        throw e;
     }
+}
 
     @Override
     public Proyecto buscarPorId(Long id) {
