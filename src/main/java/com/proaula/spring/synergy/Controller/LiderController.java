@@ -39,9 +39,8 @@ public class LiderController {
         return usuario;
     }
 
-
     // =======================================================
-    // DASHBOARD DEL LÍDER (LISTA SOLO SUS PROYECTOS)
+    // DASHBOARD DEL LÍDER
     // =======================================================
     @GetMapping("/dashboard")
     public String dashboardLider(HttpSession session, Model model) {
@@ -55,12 +54,11 @@ public class LiderController {
         model.addAttribute("usuario", lider);
         model.addAttribute("proyectos", proyectos);
 
-        return "Lider_Dashboard";
+        return "Lider_Proyecto_Dashboard";
     }
 
-
     // =======================================================
-    // FORMULARIO PARA CREAR UN NUEVO PROYECTO
+    // FORMULARIO CREAR PROYECTO
     // =======================================================
     @GetMapping("/proyecto/nuevo")
     public String formularioNuevoProyecto(HttpSession session, Model model) {
@@ -70,13 +68,11 @@ public class LiderController {
             return "redirect:/login";
 
         model.addAttribute("proyecto", new Proyecto());
-
         return "Lider_Crear_Proyecto";
     }
 
-
     // =======================================================
-    // GUARDAR NUEVO PROYECTO
+    // GUARDAR PROYECTO
     // =======================================================
     @PostMapping("/proyecto/guardar")
     public String guardarProyecto(@ModelAttribute Proyecto proyecto,
@@ -86,17 +82,14 @@ public class LiderController {
         if (lider == null)
             return "redirect:/login";
 
-        // FORZAR QUE EL PROYECTO PERTENECE AL LÍDER
         proyecto.setLider(lider);
-
         proyectoService.guardar(proyecto, null);
 
         return "redirect:/lider/dashboard";
     }
 
-
     // =======================================================
-    // FORMULARIO EDITAR PROYECTO
+    // EDITAR PROYECTO
     // =======================================================
     @GetMapping("/proyecto/{id}/editar")
     public String editarProyecto(@PathVariable Long id,
@@ -108,19 +101,13 @@ public class LiderController {
             return "redirect:/login";
 
         Proyecto proyecto = proyectoService.buscarPorId(id);
-
-        if (proyecto == null)
-            return "redirect:/lider/dashboard";
-
-        // VALIDAR QUE EL PROYECTO ES DE ESTE LÍDER
-        if (!proyecto.getLider().equals(lider))
+        if (proyecto == null || !proyecto.getLider().equals(lider))
             return "redirect:/lider/dashboard";
 
         model.addAttribute("proyecto", proyecto);
 
         return "Lider_Editar_Proyecto";
     }
-
 
     // =======================================================
     // ACTUALIZAR PROYECTO
@@ -134,13 +121,50 @@ public class LiderController {
         if (lider == null)
             return "redirect:/login";
 
-        // GARANTIZAR QUE SE MANTIENE EL DUEÑO DEL PROYECTO
         proyecto.setId(id);
         proyecto.setLider(lider);
 
         proyectoService.guardar(proyecto, null);
 
-        return "redirect:/lider/dashboard";
+        return "redirect:/lider/dashboard";  // ← CORREGIDO
+    }
+
+    // =======================================================
+    // PÁGINAS NUEVAS QUE PEDISTE
+    // =======================================================
+
+    @GetMapping("/tareas/asignar")
+public String asignarTareas(HttpSession session, Model model) {
+
+    Usuarios lider = validarLider(session);
+    if (lider == null)
+        return "redirect:/login";
+    // Obtener proyectos del líder
+    List<Proyecto> proyectos = proyectoService.obtenerProyectosDeLider(null);
+    model.addAttribute("proyectos", proyectos);
+    return "Lider_Asignar_Tareas";
+}
+
+    // VER USUARIOS INSCRITOS AL PROYECTO
+    @GetMapping("/usuarios")
+    public String usuariosInscritos(HttpSession session, Model model) {
+
+        Usuarios lider = validarLider(session);
+        if (lider == null)
+            return "redirect:/login";
+
+        return "Lider_Usuarios_Proyecto";
+    }
+
+    // VER TAREAS RECIBIDAS
+    @GetMapping("/tareas/recibidas")
+    public String tareasRecibidas(HttpSession session, Model model) {
+
+        Usuarios lider = validarLider(session);
+        if (lider == null)
+            return "redirect:/login";
+
+        return "Lider_Tareas_Recibidas";
     }
 
 }

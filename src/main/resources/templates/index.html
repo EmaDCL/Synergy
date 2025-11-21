@@ -1,33 +1,277 @@
-
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Synergy - Página Principal</title>
+  <title>Synergy - Sistema de Gestión de Proyectos Ambientales</title>
   <link rel="stylesheet" th:href="@{/css/Index.css}">
 </head>
 <body>
   <header>
     <h1>Synergy</h1>
     <nav>
-
       <a th:href="@{/registrarse}">Registrarse</a>
       <a th:href="@{/login}">Login</a>
-  
     </nav>
   </header>
 
   <section class="hero">
     <div class="overlay"></div>
-
     <div class="hero-content">
       <h2>Bienvenido a Synergy</h2>
       <p>Un espacio para la colaboración ecológica y comunitaria</p>
-
       <a th:href="@{/registrarse}" class="btn-comenzar">Comenzar</a>
     </div>
   </section>
-  
+
+  <section class="about">
+    <h2 class="section-title">Sobre Synergy</h2>
+    <div class="about-content">
+      <div class="about-text">
+        <h3>Sistema de Gestión de Proyectos Ambientales</h3>
+        <p>Synergy es una plataforma web diseñada para gestionar proyectos comunitarios ambientales, permitiendo que administradores, líderes y participantes trabajen de manera organizada, rápida y eficiente.</p>
+        <p>Centraliza la creación, asignación, seguimiento y evaluación de proyectos y tareas, asegurando una comunicación clara y coordinación efectiva dentro de tus equipos.</p>
+        <h4 style="color: #2a9d8f; margin-top: 25px; margin-bottom: 15px;">¿Para quién es?</h4>
+        <ul class="about-features">
+          <li>Instituciones educativas</li>
+          <li>Grupos de trabajo comunitarios</li>
+          <li>Organizaciones sociales</li>
+          <li>Equipos con proyectos ambientales</li>
+          <li>Líderes que gestionan voluntarios</li>
+          <li>Pequeñas empresas con gestión estructurada</li>
+        </ul>
+      </div>
+      <div class="about-text">
+        <h3>¿Por qué elegir Synergy?</h3>
+        <ul class="about-features" style="margin-top: 30px;">
+          <li>✨ Gestión centralizada y ordenada</li>
+          <li>🎯 Seguimiento en tiempo real de proyectos</li>
+          <li>👥 Roles claros para cada usuario</li>
+          <li>📝 Asignación eficiente de tareas</li>
+          <li>💬 Comunicación integrada</li>
+          <li>📊 Reportes y evidencias</li>
+          <li>🔒 Seguridad y control de acceso</li>
+          <li>🌱 Impacto ambiental medible</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <h2 class="section-title">Características Principales</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="icon">🗂️</div>
+        <h4>Gestión de Proyectos</h4>
+        <p>Creación, edición y seguimiento centralizado. Cada proyecto tiene un líder asignado y visualización clara de estados y fechas.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">👥</div>
+        <h4>Roles de Usuario</h4>
+        <p>Administrador, Líder y Participante. Permisos claros y definidos para cada rol dentro del sistema.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📝</div>
+        <h4>Asignación y Reporte</h4>
+        <p>Líderes asignan tareas, participantes envían evidencias. Sistema de almacenamiento seguro de comentarios y archivos.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">💬</div>
+        <h4>Comunicación Interna</h4>
+        <p>Comentarios por proyecto y retroalimentación por tarea. Mantén a todo tu equipo informado en todo momento.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📅</div>
+        <h4>Organización y Seguimiento</h4>
+        <p>Tableros personalizados según rol. Listas filtradas de proyectos, usuarios y entregas.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🌟</div>
+        <h4>Registro Completo</h4>
+        <p>Todo queda guardado y documentado. Acceso a históricos y trazabilidad completa de actividades.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="benefits">
+    <h2 class="section-title">Beneficios Principales</h2>
+    <div class="benefits-grid">
+      <div class="benefit-item">
+        <h5>Para Administradores</h5>
+        <p>Control total de usuarios y proyectos. Flujo de validación seguro y ordenado. Gestión centralizada de toda la plataforma.</p>
+      </div>
+      <div class="benefit-item">
+        <h5>Para Líderes</h5>
+        <p>Herramienta clara para dirigir equipos. Gestión eficiente de tareas. Visión total del progreso del proyecto.</p>
+      </div>
+      <div class="benefit-item">
+        <h5>Para Participantes</h5>
+        <p>Reciben tareas de forma clara. Entregan evidencias fácilmente. Evitan confusiones y pérdida de información.</p>
+      </div>
+      <div class="benefit-item">
+        <h5>Mayor Productividad</h5>
+        <p>Todos saben qué hacer y cuándo. Menos tiempo en coordinación y más en ejecución.</p>
+      </div>
+      <div class="benefit-item">
+        <h5>Comunicación Ordenada</h5>
+        <p>Todo en un solo lugar. Histórico completo de decisiones y cambios.</p>
+      </div>
+      <div class="benefit-item">
+        <h5>Impacto Medible</h5>
+        <p>Proyectos mejor organizados. Resultados documentados y evaluables.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <h2 class="section-title">Conoce al Equipo Synergy</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="testimonial-text">"Synergy ha transformado la forma en que gestionamos nuestros proyectos. Es intuitivo, eficiente y exactamente lo que necesitábamos."</div>
+        <div class="testimonial-author">👤 Jesús Daniel Castilla Orozco</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="testimonial-text">"Con Synergy, toda la información está centralizada. La comunicación es clara y los proyectos avanzan sin confusiones."</div>
+        <div class="testimonial-author">👤 Natalia Marcela Castilla Álvarez</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="testimonial-text">"Es impresionante cómo simplifica la gestión de tareas. El equipo está más motivado y organizado que nunca."</div>
+        <div class="testimonial-author">👤 Danier Alejandro Ospino Murillo</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="testimonial-text">"Synergy es la solución que buscábamos. Facilita la coordinación y mejora significativamente nuestra productividad."</div>
+        <div class="testimonial-author">👤 Luis Miguel Lara Sánchez</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <div class="testimonial-text">"Desde que implementamos Synergy, hemos visto mejoras notables en la organización de proyectos ambientales."</div>
+        <div class="testimonial-author">👤 Emmanuel David Cali Liñán</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2 class="section-title">Preguntas Frecuentes</h2>
+    
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>¿Cómo me registro en Synergy?</span>
+        <span class="faq-toggle">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          El registro es sencillo. Haz clic en "Registrarse", completa tu información básica y selecciona tu rol (Administrador, Líder o Participante). Una vez confirmado, tendrás acceso inmediato a la plataforma.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>¿Qué roles existen en Synergy?</span>
+        <span class="faq-toggle">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Existen tres roles principales: <strong>Administrador</strong> (gestiona usuarios y aprueba proyectos), <strong>Líder</strong> (crea proyectos y asigna tareas), y <strong>Participante</strong> (recibe tareas y sube evidencias).
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>¿Cómo creo un nuevo proyecto?</span>
+        <span class="faq-toggle">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Si eres Líder o Administrador, ve a la sección "Proyectos" y haz clic en "Crear Nuevo Proyecto". Completa la información básica (nombre, descripción, fechas) y asigna participantes. El proyecto quedará listo para empezar.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>¿Cómo asigno tareas a mi equipo?</span>
+        <span class="faq-toggle">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Dentro de un proyecto, ve a "Tareas" y haz clic en "Crear Tarea". Define la descripción, asigna responsables, establece fechas límite y prioridades. Los participantes recibirán una notificación automática.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>¿Cómo envío evidencia de mi trabajo?</span>
+        <span class="faq-toggle">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          En tu panel de participante, selecciona la tarea asignada. Haz clic en "Entregar Evidencia", adjunta archivos (fotos, documentos, videos) y agrega comentarios explicativos. El sistema guardará automáticamente.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>¿Es Synergy segura para datos sensibles?</span>
+        <span class="faq-toggle">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Sí. Synergy cuenta con encriptación de datos, autenticación segura y control de acceso basado en roles. Solo los usuarios autorizados pueden ver información específica.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>¿Puedo usar Synergy en dispositivos móviles?</span>
+        <span class="faq-toggle">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Absolutamente. Synergy es completamente responsivo y funciona perfectamente en smartphones y tablets. La interfaz se adapta a cualquier tamaño de pantalla.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>¿Cuál es el costo de Synergy?</span>
+        <span class="faq-toggle">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Synergy es una plataforma que puede adaptarse a diferentes modelos de negocio. Contáctanos para conocer planes personalizados según las necesidades de tu organización.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span>¿Hay soporte técnico disponible?</span>
+        <span class="faq-toggle">▼</span>
+      </div>
+      <div class="faq-answer">
+        <div class="faq-answer-content">
+          Sí. Contamos con un equipo de soporte dedicado disponible para ayudarte con cualquier consulta. Puedes contactarnos por email, chat o teléfono.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Synergy - Sistema de Gestión de Proyectos Ambientales</p>
+    <p>Diseñado con ❤️ para comunidades y organizaciones comprometidas con el ambiente</p>
+    <p>Desarrollado por: Jesús Daniel Castilla | Natalia Marcela Castilla | Danier Alejandro Ospino | Luis Miguel Lara | Emmanuel David Cali</p>
+  </footer>
+
+  <script th:src="@{/js/script.js}"></script>
 </body>
 </html>

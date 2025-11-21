@@ -72,7 +72,7 @@ public class ProyectoServiceImpl implements ProyectoService {
 
     @Override
     public List<Proyecto> obtenerProyectosDeLider(Long idLider) {
-        return proyectoRepository.findByIdLider(idLider);
+        return proyectoRepository.findByLider_Id(idLider);
     }
 
     public List<Proyecto> listarProyectos() {

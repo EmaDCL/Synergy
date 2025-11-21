@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="/css/Lider_Dashboard.css">
   <link rel="stylesheet" href="/Synergy/src/main/resources/static/css/Usuarios_Dashboard.css">
 </head>
+
 <body>
 
   <div class="hero">
@@ -18,7 +20,7 @@
         <!-- ENCABEZADO -->
         <div class="header">
           <div class="top-buttons">
-            
+
             <!-- Inicio -->
             <a th:href="@{/index}" class="btn-inicio">Inicio</a>
 
@@ -34,17 +36,18 @@
         <!-- OPCIONES PRINCIPALES -->
         <div class="menu-options">
 
-          <a th:href="@{/lider/Asignar_Tareas}" class="menu-btn">
+          <a th:href="@{/lider/tareas/asignar}" class="menu-btn">
             📝 Asignar tareas
           </a>
 
-          <a th:href="@{/lider/usuarios-proyecto}" class="menu-btn">
+          <a th:href="@{/lider/usuarios}" class="menu-btn">
             👥 Ver usuarios inscritos al proyecto
           </a>
 
-          <a th:href="@{/tareas/recibidas}" class="menu-btn">
+          <a th:href="@{/lider/tareas/recibidas}" class="menu-btn">
             📥 Ver tareas recibidas
           </a>
+
 
         </div>
 
@@ -53,4 +56,5 @@
   </div>
 
 </body>
+
 </html>

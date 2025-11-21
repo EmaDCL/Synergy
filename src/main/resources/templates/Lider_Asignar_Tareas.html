@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asignar Tarea – Synergy</title>
+    <link rel="stylesheet" href="/css/Lider_Asignar_Tareas.css" />
+</head>
+
+<body>
+
+<div class="hero">
+    <div class="overlay"></div>
+
+    <div class="container">
+        <div class="card">
+
+            <!-- Header -->
+            <div class="header">
+                <div class="top-buttons">
+                    <button class="btn-volver" onclick="location.href='/lider/dashboard'">⬅ Volver</button>
+                </div>
+
+                <h1>Asignar Tarea</h1>
+                <p class="subtitle">Completa los datos para enviar una nueva tarea a un participante.</p>
+            </div>
+
+            <!-- Formulario -->
+            <form method="post" th:action="@{/tareas/asignar}" class="formulario">
+
+                <label>Título de la Tarea</label>
+                <input type="text" name="titulo" required />
+
+                <label>Descripción</label>
+                <textarea name="descripcion" rows="4" required></textarea>
+
+                <label>Asignar a</label>
+                <select name="usuarioId" required>
+                    <option th:each="u : ${usuarios}" th:value="${u.id}" th:text="${u.nombre}"></option>
+                </select>
+
+                <button type="submit" class="btn-guardar">Asignar Tarea</button>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

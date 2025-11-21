@@ -9,7 +9,6 @@ import com.proaula.spring.synergy.Model.Proyecto;
 @Repository
 public interface ProyectoRepository extends JpaRepository<Proyecto, Long> {
 
-List<Proyecto> findByIdLider(Long idLider);
-
+    List<Proyecto> findByLider_Id(Long idLider);
 
 }
